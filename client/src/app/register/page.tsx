@@ -42,7 +42,7 @@ export default function Register() {
         setLoading(true);
         try {
             // 1. Check Email
-            const emailRes = await fetch('http://localhost:5000/api/v1/check-email', {
+            const emailRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/v1/check-email`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: formData.email })
@@ -56,7 +56,7 @@ export default function Register() {
             }
 
             // 2. Send OTP
-            const otpRes = await fetch('http://localhost:5000/api/v1/send-otp', {
+            const otpRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/v1/send-otp`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: formData.email })
@@ -81,7 +81,7 @@ export default function Register() {
         setLoading(true);
         try {
             // 3. Register with OTP
-            const res = await fetch('http://localhost:5000/api/v1/register', {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/v1/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
