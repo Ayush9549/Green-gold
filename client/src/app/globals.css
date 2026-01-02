@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+:root {
+  --color-primary: #3a4b1c;
+  --color-primary-dark: #263c10;
+  /* Deep Luxury Olive */
+  --color-primary-light: #556b2f;
+  /* Standard Olive */
+  --color-gold: #D4AF37;
+  /* Premium Gold */
+  --color-gold-light: #F4E5BC;
+  /* Pale Gold for backgrounds */
+  --color-secondary: #8b4513;
+  --color-accent: #D4AF37;
+  /* Using Gold as accent */
+  --color-background: #FAF9F6;
+  /* Premium Off-White */
+  --color-surface: #ffffff;
+  --color-text: #1a1a1a;
+  --color-text-light: #555555;
+
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 6px 12px rgba(0, 0, 0, 0.08);
+  /* Softer, deeper shadows */
+  --shadow-lg: 0 15px 25px rgba(0, 0, 0, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 80px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.section {
+  padding: 5rem 0;
+}

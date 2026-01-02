@@ -1,0 +1,97 @@
+.pageHeader {
+    background-color: var(--color-background);
+    padding: 4rem 0 2rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.pageTitle {
+    font-size: 3rem;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 1rem;
+    color: var(--color-primary-dark);
+}
+
+.breadcrumb {
+    color: var(--color-text-light);
+    font-size: 0.9rem;
+}
+
+.shopContainer {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 3rem;
+    padding: 4rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.filterSidebar {
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+}
+
+.filterGroup {
+    margin-bottom: 2rem;
+}
+
+.filterTitle {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    border-bottom: 2px solid var(--color-accent);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.categoryList {
+    list-style: none;
+}
+
+.categoryItem {
+    padding: 0.5rem 0;
+    cursor: pointer;
+    transition: color 0.2s;
+    display: flex;
+    justify-content: space-between;
+}
+
+.categoryItem:hover,
+.activeCategory {
+    color: var(--color-primary);
+    font-weight: 500;
+}
+
+.priceRange {
+    width: 100%;
+}
+
+.productsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.noProducts {
+    text-align: center;
+    padding: 4rem;
+    grid-column: 1 / -1;
+    color: var(--color-text-light);
+}
+
+@media (max-width: 768px) {
+    .shopContainer {
+        grid-template-columns: 1fr;
+    }
+
+    .filterSidebar {
+        position: static;
+        margin-bottom: 2rem;
+    }
+}
