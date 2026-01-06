@@ -79,8 +79,8 @@ export default function Contact() {
                                 <div className={styles.iconWrapper}><FaMapMarkerAlt /></div>
                                 <div className={styles.infoContent}>
                                     <h3>{t('contact.visit.title')}</h3>
-                                    <p>123 Olive Grove Lane,</p>
-                                    <p>Andalusia, Spain 41001</p>
+                                    <p>Masseria San Biagio, Strada Prov.le 275, km 3</p>
+                                    <p>Calimera, Lecce, Puglia, Italy</p>
                                 </div>
                             </div>
 
@@ -161,18 +161,19 @@ export default function Contact() {
 
                     </div>
 
-                    {/* Map Placeholder */}
+                    {/* Real Google Map */}
                     <div className="container">
-                        <div className={styles.mapSection}>
-                            {/* In a real app, embed Google Maps iframe here */}
-                            <img
-                                src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1920&q=80"
-                                alt="Map Location"
-                                style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8 }}
-                            />
-                            <div className={styles.mapOverlay}>
-                                {t('contact.map.coming')}
-                            </div>
+                        <div className={styles.mapSection} style={{ overflow: 'hidden', borderRadius: '20px', boxShadow: 'var(--shadow-lg)', border: '1px solid #eee' }}>
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3036.78!2d18.3048!3d40.2519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13442f4951475c43%3A0xc64ef72d73199890!2sMasseria%20San%20Biagio!5e0!3m2!1sen!2sit!4v1700000000000!5m2!1sen!2sit"
+                                width="100%"
+                                height="450"
+                                style={{ border: 0 }}
+                                allowFullScreen={true}
+                                loading="lazy"
+                                referrerPolicy="no-referrer-when-downgrade"
+                                title="Green Gold Location - Masseria San Biagio"
+                            ></iframe>
                         </div>
                     </div>
                 </section>

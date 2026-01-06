@@ -5,7 +5,7 @@ import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
 import styles from './Home.module.css';
 import { motion } from 'framer-motion';
-import { FaLeaf, FaUser, FaFlask, FaCheckCircle, FaCertificate } from 'react-icons/fa';
+import { FaLeaf, FaUser, FaFlask, FaCheckCircle, FaCertificate, FaGlobe } from 'react-icons/fa';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -105,7 +105,6 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            style={{ paddingLeft: '10rem' }}
           >
             <h1 className={styles.heroTitle}>{t('home.hero.title')}</h1>
             <p className={styles.heroSubtitle}>
@@ -124,9 +123,10 @@ export default function Home() {
           <div className={styles.featureGrid}>
             {[
               { icon: <FaLeaf />, title: "feature.pure.title", desc: "feature.pure.desc" },
-              { icon: <FaLeaf />, title: "feature.cold.title", desc: "feature.cold.desc" }, // Need icon for Cold Pressed, using Leaf for now or Flask
-              { icon: <FaFlask />, title: "feature.chem.title", desc: "feature.chem.desc" },
-              { icon: <FaCheckCircle />, title: "feature.lab.title", desc: "feature.lab.desc" }
+              { icon: <FaCheckCircle />, title: "feature.cold.title", desc: "feature.cold.desc" },
+              { icon: <FaLeaf />, title: "feature.farm.title", desc: "feature.farm.desc" },
+              { icon: <FaGlobe />, title: "feature.direct.title", desc: "feature.direct.desc" },
+              { icon: <FaCertificate />, title: "feature.lab.title", desc: "feature.lab.desc" }
             ].map((feature, index) => (
               <motion.div
                 key={index}
