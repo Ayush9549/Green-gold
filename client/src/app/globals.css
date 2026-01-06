@@ -36,6 +36,9 @@ body {
   color: var(--color-text);
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+main {
   padding-top: 80px;
 }
 

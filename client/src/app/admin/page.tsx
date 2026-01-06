@@ -16,9 +16,9 @@ export default function AdminDashboard() {
 
     return (
         <div>
-            <div className={styles.header}>
+            {/* <div className={styles.header}>
                 <h1 className={styles.title}>Dashboard Overview</h1>
-            </div>
+            </div> */}
 
             {/* Metrics Cards */}
             <div className={styles.cardGrid}>

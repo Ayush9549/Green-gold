@@ -55,8 +55,13 @@
     transition: width 0.3s ease;
 }
 
-.navLinks a:hover::after {
+.navLinks a:hover::after,
+.navLinks .activeLink::after {
     width: 100%;
+}
+
+.navLinks .activeLink {
+    color: var(--color-gold);
 }
 
 .navIcons {

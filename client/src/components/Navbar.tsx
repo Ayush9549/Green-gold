@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { FaShoppingCart, FaUser, FaGlobe, FaLeaf, FaSearch, FaSignOutAlt } from 'react-icons/fa';
 import styles from './Navbar.module.css';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
@@ -14,6 +14,7 @@ const Navbar = () => {
     const { user, logout } = useAuth();
     const [searchQuery, setSearchQuery] = useState('');
     const router = useRouter();
+    const pathname = usePathname();
 
     const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
@@ -30,12 +31,12 @@ const Navbar = () => {
                 </Link>
 
                 <ul className={styles.navLinks}>
-                    <li><Link href="/">Home</Link></li>
-                    <li><Link href="/shop">Products</Link></li>
-                    <li><Link href="/about">About</Link></li>
-                    <li><Link href="/benefits">Benefits</Link></li>
-                    <li><Link href="/blog">Blog</Link></li>
-                    <li><Link href="/contact">Contact</Link></li>
+                    <li><Link href="/" className={pathname === '/' ? styles.activeLink : ''}>Home</Link></li>
+                    <li><Link href="/shop" className={pathname?.startsWith('/shop') ? styles.activeLink : ''}>Products</Link></li>
+                    <li><Link href="/about" className={pathname === '/about' ? styles.activeLink : ''}>About</Link></li>
+                    <li><Link href="/benefits" className={pathname === '/benefits' ? styles.activeLink : ''}>Benefits</Link></li>
+                    <li><Link href="/blog" className={pathname === '/blog' ? styles.activeLink : ''}>Blog</Link></li>
+                    <li><Link href="/contact" className={pathname === '/contact' ? styles.activeLink : ''}>Contact</Link></li>
                 </ul>
 
                 <div className={styles.navIcons} style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
