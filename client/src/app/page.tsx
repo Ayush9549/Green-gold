@@ -46,6 +46,38 @@ const FEATURED_PRODUCTS = [
 export default function Home() {
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "name": "Green Gold Jaitun Oil",
+                "url": "https://green-gold.vercel.app",
+                "logo": "https://green-gold.vercel.app/logo.png",
+                "description": "Premium Cold Pressed Jaitun Oil (Olive Oil) provider.",
+                "sameAs": [
+                  "https://facebook.com/greengold",
+                  "https://instagram.com/greengold",
+                  "https://twitter.com/greengold"
+                ]
+              },
+              {
+                "@type": "WebSite",
+                "name": "Green Gold Jaitun Oil",
+                "url": "https://green-gold.vercel.app",
+                "potentialAction": {
+                  "@type": "SearchAction",
+                  "target": "https://green-gold.vercel.app/shop?search={search_term_string}",
+                  "query-input": "required name=search_term_string"
+                }
+              }
+            ]
+          }),
+        }}
+      />
       <Navbar />
 
       {/* Hero Section */}
