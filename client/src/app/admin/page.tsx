@@ -67,6 +67,7 @@ export default function AdminDashboard() {
                         <tr>
                             <th>{t('admin.order_id')}</th>
                             <th>{t('admin.customer')}</th>
+                            <th>{t('admin.order_view.items')}</th>
                             <th>{t('admin.date')}</th>
                             <th>{t('admin.status')}</th>
                             <th>{t('admin.total')}</th>
@@ -75,13 +76,22 @@ export default function AdminDashboard() {
                     <tbody>
                         {orders.length === 0 ? (
                             <tr>
-                                <td colSpan={5} style={{ textAlign: 'center', color: '#888', padding: '2rem' }}>{t('admin.no_orders')}</td>
+                                <td colSpan={6} style={{ textAlign: 'center', color: '#888', padding: '2rem' }}>{t('admin.no_orders')}</td>
                             </tr>
                         ) : (
                             orders.slice(0, 5).map(order => (
                                 <tr key={order.id}>
                                     <td>{order.id}</td>
                                     <td>{order.customerName}</td>
+                                    <td>
+                                        <div style={{ width: '35px', height: '35px', borderRadius: '4px', overflow: 'hidden', border: '1px solid #eee' }}>
+                                            <img
+                                                src={order.items[0]?.image || 'https://via.placeholder.com/35'}
+                                                alt={order.items[0]?.title}
+                                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                            />
+                                        </div>
+                                    </td>
                                     <td>{order.date}</td>
                                     <td>
                                         <span
