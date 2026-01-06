@@ -22,7 +22,7 @@ export default function TermsOfService() {
                 <section className={styles.section}>
                     <h2 className={styles.sectionTitle}>2. Use License</h2>
                     <div className={styles.content}>
-                        <p>Permission is granted to temporarily download one copy of the materials (information or software) on Jaitun Oil's website for personal, non-commercial transitory viewing only.</p>
+                        <p>Permission is granted to temporarily download one copy of the materials (information or software) on Olive Oil's website for personal, non-commercial transitory viewing only.</p>
                     </div>
                 </section>
 
@@ -36,7 +36,7 @@ export default function TermsOfService() {
                 <section className={styles.section}>
                     <h2 className={styles.sectionTitle}>4. Governing Law</h2>
                     <div className={styles.content}>
-                        <p>Any claim relating to Jaitun Oil's website shall be governed by the laws of the State of New York without regard to its conflict of law provisions.</p>
+                        <p>Any claim relating to Olive Oil's website shall be governed by the laws of the State of New York without regard to its conflict of law provisions.</p>
                     </div>
                 </section>
 

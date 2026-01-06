@@ -34,7 +34,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         const savedCart = localStorage.getItem('jaitun_cart');
         if (savedCart) {
             try {
-                // eslint-disable-next-line
+                // eslint-disable-next-line react-hooks/set-state-in-effect
                 setCart(JSON.parse(savedCart));
             } catch (e) {
                 console.error("Failed to parse cart", e);

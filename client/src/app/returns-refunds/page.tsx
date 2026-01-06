@@ -15,7 +15,7 @@ export default function ReturnsRefunds() {
                 <section className={styles.section}>
                     <h2 className={styles.sectionTitle}>Return Policy</h2>
                     <div className={styles.content}>
-                        <p>We want you to love your Jaitun Oil purchase. If you are not completely satisfied, we accept returns within 30 days of purchase.</p>
+                        <p>We want you to love your Olive Oil purchase. If you are not completely satisfied, we accept returns within 30 days of purchase.</p>
                         <p>To be eligible for a return, your item must be:</p>
                         <ul>
                             <li>Unused and in the same condition that you received it.</li>

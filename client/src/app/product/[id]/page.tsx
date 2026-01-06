@@ -7,6 +7,7 @@ import styles from '../Product.module.css';
 import { FaStar, FaMinus, FaPlus, FaCheckCircle, FaTruck, FaShieldAlt, FaLeaf, FaBoxOpen } from 'react-icons/fa';
 import { useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
 
 // Extended Mock Data
 const PRODUCTS_DB: Record<string, any> = {
@@ -30,11 +31,11 @@ const PRODUCTS_DB: Record<string, any> = {
     },
     "2": {
         id: 2,
-        title: "Cold Pressed Jaitun Oil",
+        title: "Cold Pressed Olive Oil",
         price: 18.50,
         rating: 4,
         category: "Classic",
-        description: "A versatile kitchen staple, our Classic Cold Pressed Jaitun Oil offers a smooth, balanced flavor profile suitable for everyday cooking. Whether you're sautéing, grilling, or baking, this oil delivers consistent quality and health benefits.",
+        description: "A versatile kitchen staple, our Classic Cold Pressed Olive Oil offers a smooth, balanced flavor profile suitable for everyday cooking. Whether you're sautéing, grilling, or baking, this oil delivers consistent quality and health benefits.",
         image: "https://images.unsplash.com/photo-1542542526-2df73eb0e869?auto=format&fit=crop&w=500&q=80",
         features: ["Versatile Cooking Oil", "Rich Smooth Flavor", "Heart Healthy Fats", "All-Natural Process"],
         ingredients: "100% Cold Pressed Olive Oil.",
@@ -100,7 +101,7 @@ const PRODUCTS_DB: Record<string, any> = {
         price: 22.00,
         rating: 4,
         category: "Beauty",
-        description: "Revitalize dry and damaged hair with our Jaitun Hair Care Elixir. Blended with rosemary and peppermint oils, this treatment stimulates the scalp, promotes growth, and leaves hair silky smooth without weighing it down.",
+        description: "Revitalize dry and damaged hair with our Olive Hair Care Elixir. Blended with rosemary and peppermint oils, this treatment stimulates the scalp, promotes growth, and leaves hair silky smooth without weighing it down.",
         image: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=500&q=80",
         features: ["Promotes Hair Growth", "Scalp Stimulation", "Lightweight Formula", "Paraben Free"],
         ingredients: "Olive Oil, Rosemary Oil, Peppermint Oil, Vitamin E.",
@@ -150,7 +151,9 @@ const RELATED_PRODUCTS = [
 import { useCart } from '@/context/CartContext';
 import { useProducts } from '@/context/ProductContext';
 
+
 export default function ProductDetails() {
+    const { t } = useLanguage();
     const params = useParams();
     const id = Array.isArray(params.id) ? params.id[0] : params.id;
 
@@ -160,11 +163,11 @@ export default function ProductDetails() {
     // Fallback if product not found (or while loading)
     const product = foundProduct || {
         id: 0,
-        title: "Product Not Found",
+        title: t('product.not_found'),
         price: 0,
         rating: 0,
         category: "Unknown",
-        description: "The requested product does not exist.",
+        description: t('product.not_found.desc'),
         image: "https://via.placeholder.com/500",
         features: [],
         ingredients: "N/A",
@@ -221,7 +224,7 @@ export default function ProductDetails() {
             <div className={styles.productContainer}>
                 {/* Breadcrumb */}
                 <div className={styles.breadcrumb}>
-                    Home / Shop / {product.category} / <b>{product.title}</b>
+                    {t('product.breadcrumb.home')} / {t('product.breadcrumb.shop')} / {product.category} / <b>{product.title}</b>
                 </div>
 
                 {/* Main Product Grid */}
@@ -268,7 +271,7 @@ export default function ProductDetails() {
 
                     {/* Right: Details */}
                     <div className={styles.detailsSection}>
-                        <span className={styles.category}>{product.category} Collection</span>
+                        <span className={styles.category}>{product.category} {t('product.collection')}</span>
                         <h1 className={styles.title}>{product.title}</h1>
 
                         <div className={styles.rating}>
@@ -277,7 +280,7 @@ export default function ProductDetails() {
                                     <FaStar key={i} color={i < (product.rating || 0) ? "#eebb2d" : "#e4e5e9"} size={20} />
                                 ))}
                             </div>
-                            <span className={styles.reviewCount}>Based on 124 reviews</span>
+                            <span className={styles.reviewCount}>{t('product.reviews')}</span>
                         </div>
 
                         <div className={styles.price}>
@@ -298,18 +301,18 @@ export default function ProductDetails() {
                             ))}
                             <div className={styles.featureItem}>
                                 <FaLeaf className={styles.featureIcon} />
-                                <span>100% Vegan</span>
+                                <span>{t('product.vegan')}</span>
                             </div>
                             <div className={styles.featureItem}>
                                 <FaBoxOpen className={styles.featureIcon} />
-                                <span>Eco Packaging</span>
+                                <span>{t('product.eco_packaging')}</span>
                             </div>
                         </div>
 
                         {/* Size Selection */}
                         {product.sizes && product.sizes.length > 0 && (
                             <div style={{ marginBottom: '1.5rem' }}>
-                                <h3 style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>Select Size:</h3>
+                                <h3 style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>{t('product.select_size')}</h3>
                                 <div style={{ display: 'flex', gap: '0.5rem' }}>
                                     {product.sizes.map((size: string) => (
                                         <button
@@ -341,13 +344,13 @@ export default function ProductDetails() {
                                 className={styles.addToCartBtn}
                                 onClick={handleAddToCart}
                             >
-                                Add to Cart - ${(product.price * quantity).toFixed(2)}
+                                {t('product.add_to_cart')} - ${(product.price * quantity).toFixed(2)}
                             </button>
                         </div>
 
                         <div style={{ display: 'flex', gap: '2rem', fontSize: '0.9rem', color: '#666' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><FaTruck /> Free global shipping</div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><FaShieldAlt /> 2 Year Warranty</div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><FaTruck /> {t('product.free_shipping')}</div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><FaShieldAlt /> {t('product.warranty')}</div>
                         </div>
 
                     </div>
@@ -360,34 +363,34 @@ export default function ProductDetails() {
                             className={`${styles.tabBtn} ${activeTab === 'desc' ? styles.activeTab : ''}`}
                             onClick={() => setActiveTab('desc')}
                         >
-                            Description
+                            {t('product.tab.description')}
                         </button>
                         <button
                             className={`${styles.tabBtn} ${activeTab === 'nutrition' ? styles.activeTab : ''}`}
                             onClick={() => setActiveTab('nutrition')}
                         >
-                            Nutrition Facts
+                            {t('product.tab.nutrition')}
                         </button>
                         <button
                             className={`${styles.tabBtn} ${activeTab === 'shipping' ? styles.activeTab : ''}`}
                             onClick={() => setActiveTab('shipping')}
                         >
-                            Shipping & Returns
+                            {t('product.tab.shipping')}
                         </button>
                     </div>
 
                     <div className={styles.tabContent}>
                         {activeTab === 'desc' && (
                             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                                <h3>Product Description</h3>
+                                <h3>{t('product.desc.title')}</h3>
                                 <p>{product.description}</p>
                                 <br />
-                                <p><strong>Ingredients:</strong> {product.ingredients}</p>
+                                <p><strong>{t('product.desc.ingredients')}</strong> {product.ingredients}</p>
                             </motion.div>
                         )}
                         {activeTab === 'nutrition' && (
                             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                                <h3>Nutritional Information</h3>
+                                <h3>{t('product.nutrition.title')}</h3>
                                 <ul>
                                     {Object.entries(product.nutrition || {}).map(([key, val]) => (
                                         <li key={key} style={{ marginBottom: '0.5rem', textTransform: 'capitalize' }}>
@@ -399,11 +402,11 @@ export default function ProductDetails() {
                         )}
                         {activeTab === 'shipping' && (
                             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                                <h3>Shipping Information</h3>
-                                <p>We ship worldwide. Orders processed within 24 hours.</p>
+                                <h3>{t('product.shipping.title')}</h3>
+                                <p>{t('product.shipping.text')}</p>
                                 <ul>
-                                    <li>Standard Shipping: 5-7 business days</li>
-                                    <li>Express Shipping: 2-3 business days</li>
+                                    <li>{t('product.shipping.standard')}</li>
+                                    <li>{t('product.shipping.express')}</li>
                                 </ul>
                             </motion.div>
                         )}
@@ -412,7 +415,7 @@ export default function ProductDetails() {
 
                 {/* Related Products */}
                 <div className={styles.relatedSection}>
-                    <h2 className={styles.sectionTitle}>You May Also Like</h2>
+                    <h2 className={styles.sectionTitle}>{t('product.related')}</h2>
                     <div className={styles.productGrid} style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 2fr))', gap: '2rem' }}>
                         {RELATED_PRODUCTS.map(p => (
                             <ProductCard key={p.id} {...p} />

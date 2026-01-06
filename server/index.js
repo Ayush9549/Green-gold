@@ -27,7 +27,7 @@ app.use("/api/v1", product);
 app.use("/api/v1", auth);
 
 app.get('/', (req, res) => {
-    res.send('Jaitun Oil Server is running');
+    res.send('Olive Oil Server is running');
 });
 
 // Start Server

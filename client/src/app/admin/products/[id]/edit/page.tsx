@@ -4,8 +4,10 @@ import { useRouter, useParams } from 'next/navigation';
 import styles from '../../../Admin.module.css'; // Path adjusted for nested route
 import { useProducts } from '@/context/ProductContext';
 import { Product } from '@/context/ProductContext';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function EditProductPage() {
+    const { t } = useLanguage();
     const router = useRouter();
     const params = useParams();
     const { getProductById, updateProduct } = useProducts();
@@ -47,7 +49,7 @@ export default function EditProductPage() {
                     setGalleryPreviewUrls(foundProduct.gallery);
                 }
             } else {
-                alert("Product not found");
+                alert(t('admin.edit_product.not_found'));
                 router.push('/admin/products');
             }
             setLoading(false);
@@ -99,11 +101,11 @@ export default function EditProductPage() {
                 });
             } catch (err) {
                 console.error("Error reading file:", err);
-                alert("Failed to read image file.");
+                alert(t('admin.add_product.error_file'));
                 return;
             }
         } else if (imageType === 'url' && !product.image) {
-            alert("Please enter an image URL.");
+            alert(t('admin.add_product.error_url'));
             return;
         }
 
@@ -140,25 +142,25 @@ export default function EditProductPage() {
 
         if (productId) {
             updateProduct(productId, updatedData);
-            alert("Product Updated Successfully!");
+            alert(t('admin.edit_product.success'));
             setTimeout(() => {
                 router.push('/admin/products');
             }, 100);
         }
     };
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <div>{t('admin.edit_product.loading')}</div>;
 
     return (
         <div>
             <div className={styles.header}>
-                <h1 className={styles.title}>Edit Product</h1>
+                <h1 className={styles.title}>{t('admin.edit_product.title')}</h1>
             </div>
 
             <div className={styles.card} style={{ maxWidth: '800px' }}>
                 <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                        <label style={{ fontWeight: 600, color: '#444' }}>Product Name</label>
+                        <label style={{ fontWeight: 600, color: '#444' }}>{t('admin.add_product.name')}</label>
                         <input
                             type="text"
                             name="title" // Use title internally to match Product interface
@@ -171,7 +173,7 @@ export default function EditProductPage() {
 
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                            <label style={{ fontWeight: 600, color: '#444' }}>Category</label>
+                            <label style={{ fontWeight: 600, color: '#444' }}>{t('admin.products.category')}</label>
                             <select
                                 name="category" value={product.category} onChange={handleChange}
                                 style={{ padding: '0.8rem', border: '1px solid #ddd', borderRadius: '4px' }}
@@ -183,7 +185,7 @@ export default function EditProductPage() {
                             </select>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                            <label style={{ fontWeight: 600, color: '#444' }}>Price ($)</label>
+                            <label style={{ fontWeight: 600, color: '#444' }}>{t('admin.add_product.price')}</label>
                             <input
                                 type="number" name="price" value={product.price} onChange={handleChange} required min="0" step="0.01"
                                 style={{ padding: '0.8rem', border: '1px solid #ddd', borderRadius: '4px' }}
@@ -193,7 +195,7 @@ export default function EditProductPage() {
 
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                            <label style={{ fontWeight: 600, color: '#444' }}>Stock Quantity</label>
+                            <label style={{ fontWeight: 600, color: '#444' }}>{t('admin.add_product.stock')}</label>
                             <input
                                 type="number" name="stock" value={product.stock} onChange={handleChange} required min="0"
                                 style={{ padding: '0.8rem', border: '1px solid #ddd', borderRadius: '4px' }}
@@ -203,7 +205,7 @@ export default function EditProductPage() {
 
                     {/* Image Selection Section */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', background: '#f9f9f9', padding: '1rem', borderRadius: '8px' }}>
-                        <label style={{ fontWeight: 600, color: '#444' }}>Product Image</label>
+                        <label style={{ fontWeight: 600, color: '#444' }}>{t('admin.add_product.image')}</label>
 
                         <div style={{ display: 'flex', gap: '2rem', marginBottom: '0.5rem' }}>
                             <label style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -213,7 +215,7 @@ export default function EditProductPage() {
                                     onChange={() => setImageType('url')}
                                     style={{ accentColor: '#eebb2d' }}
                                 />
-                                Image URL
+                                {t('admin.add_product.image_url')}
                             </label>
                             <label style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                 <input
@@ -222,7 +224,7 @@ export default function EditProductPage() {
                                     onChange={() => setImageType('file')}
                                     style={{ accentColor: '#eebb2d' }}
                                 />
-                                Upload File
+                                {t('admin.add_product.upload_file')}
                             </label>
                         </div>
 
@@ -250,7 +252,7 @@ export default function EditProductPage() {
 
                     {/* Gallery Images Section */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', background: '#f9f9f9', padding: '1rem', borderRadius: '8px' }}>
-                        <label style={{ fontWeight: 600, color: '#444' }}>Gallery Images</label>
+                        <label style={{ fontWeight: 600, color: '#444' }}>{t('admin.edit_product.gallery_label')}</label>
                         <input
                             type="file" multiple accept="image/*" onChange={handleGalleryChange}
                             style={{ padding: '0.8rem', border: '1px solid #ddd', borderRadius: '4px', background: 'white' }}
@@ -266,7 +268,7 @@ export default function EditProductPage() {
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                        <label style={{ fontWeight: 600, color: '#444' }}>Description</label>
+                        <label style={{ fontWeight: 600, color: '#444' }}>{t('admin.add_product.description')}</label>
                         <textarea
                             name="description" value={product.description || ''} onChange={handleChange} required rows={4}
                             style={{ padding: '0.8rem', border: '1px solid #ddd', borderRadius: '4px', fontFamily: 'inherit' }}
@@ -279,13 +281,13 @@ export default function EditProductPage() {
                             onClick={() => router.back()}
                             style={{ padding: '0.8rem 1.5rem', background: '#ccc', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 600 }}
                         >
-                            Cancel
+                            {t('admin.add_product.cancel')}
                         </button>
                         <button
                             type="submit"
                             style={{ padding: '0.8rem 1.5rem', background: '#3498db', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 600 }}
                         >
-                            Update Product
+                            {t('admin.edit_product.update')}
                         </button>
                     </div>
                 </form>

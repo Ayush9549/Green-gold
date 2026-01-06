@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import { useSearchParams } from 'next/navigation';
 
 import { useProducts } from '@/context/ProductContext';
+import { useLanguage } from '@/context/LanguageContext';
 
 // Remove ALL_PRODUCTS constant
 const CATEGORIES = ["All", "Best Sellers", "Premium", "Classic", "Infused", "Beauty"];
@@ -15,6 +16,7 @@ const SIZES = ["All", "100ml", "250ml", "500ml", "1L", "5L"];
 
 function ShopContent() {
     const { products } = useProducts(); // Use context
+    const { t } = useLanguage();
     const searchParams = useSearchParams();
     const searchQuery = searchParams.get('search') || '';
 
@@ -54,8 +56,8 @@ function ShopContent() {
         <>
             <div className={styles.pageHeader}>
                 <div className="container">
-                    <h1 className={styles.pageTitle}>Our Collection</h1>
-                    <p className={styles.breadcrumb}>Home / Shop</p>
+                    <h1 className={styles.pageTitle}>{t('shop.title')}</h1>
+                    <p className={styles.breadcrumb}>{t('nav.home')} / {t('nav.products')}</p>
                 </div>
             </div>
 
@@ -63,7 +65,7 @@ function ShopContent() {
                 {/* Sidebar Filters */}
                 <aside className={styles.filterSidebar}>
                     <div className={styles.filterGroup}>
-                        <h3 className={styles.filterTitle}>Categories</h3>
+                        <h3 className={styles.filterTitle}>{t('shop.filters.categories')}</h3>
                         <ul className={styles.categoryList}>
                             {CATEGORIES.map(cat => (
                                 <li
@@ -71,14 +73,14 @@ function ShopContent() {
                                     className={`${styles.categoryItem} ${selectedCategory === cat ? styles.activeCategory : ''}`}
                                     onClick={() => setSelectedCategory(cat)}
                                 >
-                                    <span>{cat}</span>
+                                    <span>{t(`category.${cat.toLowerCase().replace(' ', '')}`)}</span>
                                 </li>
                             ))}
                         </ul>
                     </div>
 
                     <div className={styles.filterGroup}>
-                        <h3 className={styles.filterTitle}>Price Range</h3>
+                        <h3 className={styles.filterTitle}>{t('shop.filters.price')}</h3>
                         <input
                             type="range"
                             className={styles.priceRange}
@@ -87,11 +89,11 @@ function ShopContent() {
                             value={maxPrice}
                             onChange={(e) => setMaxPrice(Number(e.target.value))}
                         />
-                        <p style={{ marginTop: '0.5rem', fontSize: '0.9rem' }}>Price: $0 - ${maxPrice}</p>
+                        <p style={{ marginTop: '0.5rem', fontSize: '0.9rem' }}>{t('shop.filters.price_text')}: $0 - ${maxPrice}</p>
                     </div>
 
                     <div className={styles.filterGroup}>
-                        <h3 className={styles.filterTitle}>Size</h3>
+                        <h3 className={styles.filterTitle}>{t('shop.filters.size')}</h3>
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                             {SIZES.map(size => (
                                 <button
@@ -107,7 +109,7 @@ function ShopContent() {
                                         cursor: 'pointer'
                                     }}
                                 >
-                                    {size}
+                                    {size === "All" ? t('category.all') : size}
                                 </button>
                             ))}
                         </div>
@@ -118,15 +120,15 @@ function ShopContent() {
                 <section style={{ flex: 1 }}>
                     {/* Toolbar */}
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2rem', alignItems: 'center' }}>
-                        <span>Showing {filteredProducts.length} results</span>
+                        <span>{t('shop.showing')} {filteredProducts.length} {t('shop.results')}</span>
                         <select
                             value={sortOption}
                             onChange={(e) => setSortOption(e.target.value)}
                             style={{ padding: '0.5rem', borderRadius: '4px', border: '1px solid #ddd' }}
                         >
-                            <option value="popularity">Sort by Popularity</option>
-                            <option value="price-asc">Price: Low to High</option>
-                            <option value="price-desc">Price: High to Low</option>
+                            <option value="popularity">{t('shop.sort.pop')}</option>
+                            <option value="price-asc">{t('shop.sort.low')}</option>
+                            <option value="price-desc">{t('shop.sort.high')}</option>
                         </select>
                     </div>
 
@@ -144,7 +146,7 @@ function ShopContent() {
                             ))
                         ) : (
                             <div className={styles.noProducts}>
-                                <h3>No products found in this category.</h3>
+                                <h3>{t('shop.no_products')}</h3>
                             </div>
                         )}
                     </div>

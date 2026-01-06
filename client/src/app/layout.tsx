@@ -4,17 +4,19 @@ import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { ProductProvider } from "@/context/ProductContext";
+import { CouponProvider } from "@/context/CouponContext";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 export const metadata: Metadata = {
   title: {
-    default: "Green Gold | Premium Jaitun Oil & Organic Olive Oil",
-    template: "%s | Green Gold Jaitun Oil",
+    default: "Green Gold | Premium Olive Oil & Organic Olive Oil",
+    template: "%s | Green Gold Olive Oil",
   },
-  description: "Discover the purest Cold Pressed Jaitun Oil (Olive Oil). 100% Organic, Extra Virgin, and perfect for cooking, skin care, and hair growth. Order certified organic olive oil online today.",
-  keywords: ["Jaitun Oil", "Olive Oil", "Organic Olive Oil", "Extra Virgin Olive Oil", "Cold Pressed Oil", "Hair Care Oil", "Skin Care Oil", "Best Jaitun Oil", "Green Gold"],
+  description: "Discover the purest Cold Pressed Olive Oil (Olive Oil). 100% Organic, Extra Virgin, and perfect for cooking, skin care, and hair growth. Order certified organic olive oil online today.",
+  keywords: ["Olive Oil", "Olive Oil", "Organic Olive Oil", "Extra Virgin Olive Oil", "Cold Pressed Oil", "Hair Care Oil", "Skin Care Oil", "Best Olive Oil", "Green Gold"],
   openGraph: {
-    title: "Green Gold | Premium Jaitun Oil & Organic Olive Oil",
-    description: "Experience the finest organic Jaitun Oil. Cold-pressed, unadulterated, and perfect for a healthy lifestyle.",
+    title: "Green Gold | Premium Olive Oil & Organic Olive Oil",
+    description: "Experience the finest organic Olive Oil. Cold-pressed, unadulterated, and perfect for a healthy lifestyle.",
     url: "https://green-gold.vercel.app", // Assuming Vercel deployment or placeholder
     siteName: "Green Gold",
     images: [
@@ -30,8 +32,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Green Gold | Premium Jaitun Oil",
-    description: "100% Organic, Cold Pressed Jaitun Oil for your holistic wellness.",
+    title: "Green Gold | Premium Olive Oil",
+    description: "100% Organic, Cold Pressed Olive Oil for your holistic wellness.",
     images: ["/og-image.jpg"],
   },
   robots: {
@@ -47,6 +49,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { OrderProvider } from "@/context/OrderContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -56,11 +60,17 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning>
         <AuthProvider>
-          <ProductProvider>
-            <CartProvider>
-              {children}
-            </CartProvider>
-          </ProductProvider>
+          <LanguageProvider>
+            <ProductProvider>
+              <CartProvider>
+                <OrderProvider>
+                  <CouponProvider>
+                    {children}
+                  </CouponProvider>
+                </OrderProvider>
+              </CartProvider>
+            </ProductProvider>
+          </LanguageProvider>
         </AuthProvider>
       </body>
     </html>

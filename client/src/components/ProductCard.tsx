@@ -14,9 +14,11 @@ interface ProductCardProps {
 }
 
 import { useCart } from '@/context/CartContext';
+import { useLanguage } from '@/context/LanguageContext';
 
 const ProductCard: React.FC<ProductCardProps> = ({ id, title, price, rating, image, category }) => {
     const { addToCart } = useCart();
+    const { t } = useLanguage();
 
     const handleAddToCart = () => {
         addToCart({ id, title, price, image, category, quantity: 1 });
@@ -35,8 +37,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, title, price, rating, ima
                 </a>
             </div>
             <div className={styles.content}>
-                <span className={styles.category}>{category}</span>
-                <h3 className={styles.title}>{title}</h3>
+                <span className={styles.category}>{t(category)}</span>
+                <h3 className={styles.title}>{t(title)}</h3>
                 <div className={styles.rating}>
                     {[...Array(5)].map((_, i) => (
                         <FaStar key={i} color={i < (rating || 0) ? "#eebb2d" : "#e4e5e9"} />

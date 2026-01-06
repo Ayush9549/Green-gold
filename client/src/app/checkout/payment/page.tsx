@@ -4,26 +4,47 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
+import { useOrders } from '@/context/OrderContext';
 import { useRouter } from 'next/navigation';
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 export default function PaymentPage() {
     const { user, isAuthenticated } = useAuth();
     const { cart, clearCart } = useCart();
+    const { addOrder } = useOrders();
     const router = useRouter();
 
-    const [paymentMethod, setPaymentMethod] = useState('upi');
+    const [paymentMethod] = useState('paypal');
 
     useEffect(() => {
         if (!isAuthenticated) router.push('/login');
     }, [isAuthenticated, router]);
 
-    const totalAmount = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+    const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+    const shipping = subtotal > 50 ? 0 : 10;
+    const totalAmount = subtotal + shipping;
 
     const handlePayment = () => {
+        const orderId = 'ORD-' + Date.now();
+
+        // Create proper order object
+        const newOrder = {
+            id: orderId,
+            userId: user?.email || 'guest',
+            customerName: user?.name || 'Guest',
+            items: [...cart], // Clone cart items
+            total: totalAmount,
+            status: 'Pending' as const, // Force type literal
+            date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+            paymentMethod,
+            shippingAddress: user?.address || {}
+        };
+
         // Simulate processing
         setTimeout(() => {
+            addOrder(newOrder);
             clearCart();
-            router.push('/order-confirmation?id=ORD-' + Date.now());
+            router.push('/order-confirmation?id=' + orderId);
         }, 1500);
     };
 
@@ -48,67 +69,37 @@ export default function PaymentPage() {
                         </div>
                     </div>
 
-                    <h2 style={{ marginBottom: '1rem', fontSize: '1.25rem', textAlign: 'center' }}>Total: ${totalAmount.toFixed(2)}</h2>
+                    <h2 style={{ marginBottom: '2rem', fontSize: '1.25rem', textAlign: 'center' }}>Total: ${totalAmount.toFixed(2)}</h2>
 
-                    <div style={{ marginBottom: '2rem' }}>
-                        <h3 style={{ marginBottom: '1rem', borderBottom: '1px solid #eee', paddingBottom: '0.5rem' }}>Payment Method</h3>
-
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                            <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', padding: '0.5rem', border: '1px solid #ddd', borderRadius: '6px' }}>
-                                <input
-                                    type="radio"
-                                    name="payment"
-                                    value="upi"
-                                    checked={paymentMethod === 'upi'}
-                                    onChange={(e) => setPaymentMethod(e.target.value)}
-                                />
-                                <span>UPI (Google Pay, PhonePe, Paytm)</span>
-                            </label>
-
-                            <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', padding: '0.5rem', border: '1px solid #ddd', borderRadius: '6px' }}>
-                                <input
-                                    type="radio"
-                                    name="payment"
-                                    value="card"
-                                    checked={paymentMethod === 'card'}
-                                    onChange={(e) => setPaymentMethod(e.target.value)}
-                                />
-                                <span>Debit / Credit Card</span>
-                            </label>
-
-                            <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', padding: '0.5rem', border: '1px solid #ddd', borderRadius: '6px' }}>
-                                <input
-                                    type="radio"
-                                    name="payment"
-                                    value="cod"
-                                    checked={paymentMethod === 'cod'}
-                                    onChange={(e) => setPaymentMethod(e.target.value)}
-                                />
-                                <span>Cash on Delivery (COD)</span>
-                            </label>
-                        </div>
+                    <div style={{ marginTop: '1rem', width: '100%' }}>
+                        <PayPalScriptProvider options={{ clientId: "test", currency: "USD" }}>
+                            <PayPalButtons
+                                style={{ layout: "vertical", shape: "pill" }}
+                                createOrder={(data, actions) => {
+                                    return actions.order.create({
+                                        purchase_units: [
+                                            {
+                                                amount: {
+                                                    value: totalAmount.toFixed(2),
+                                                    currency_code: "USD"
+                                                },
+                                            },
+                                        ],
+                                        intent: "CAPTURE"
+                                    });
+                                }}
+                                onApprove={async (data, actions) => {
+                                    if (actions.order) {
+                                        await actions.order.capture();
+                                        handlePayment();
+                                    }
+                                }}
+                            />
+                        </PayPalScriptProvider>
                     </div>
 
-                    <button
-                        onClick={handlePayment}
-                        style={{
-                            width: '100%',
-                            background: '#556b2f',
-                            color: 'white',
-                            padding: '1rem',
-                            borderRadius: '50px',
-                            cursor: 'pointer',
-                            fontWeight: 'bold',
-                            fontSize: '1.1rem',
-                            border: 'none',
-                            marginTop: '1rem'
-                        }}
-                    >
-                        Place Order
-                    </button>
-
-                    <p style={{ marginTop: '1rem', fontSize: '0.8rem', color: '#999', textAlign: 'center' }}>
-                        Secure payments by Razorpay / Stripe
+                    <p style={{ marginTop: '2rem', fontSize: '0.8rem', color: '#999', textAlign: 'center' }}>
+                        Payments are processed securely via PayPal.
                     </p>
                 </div>
             </div>

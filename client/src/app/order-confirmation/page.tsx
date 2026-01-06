@@ -27,7 +27,7 @@ function OrderConfirmationContent() {
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <span style={{ color: '#666' }}>Payment Status:</span>
-                    <span style={{ fontWeight: 'bold', color: 'green' }}>Paid / Confirm on Delivery</span>
+                    <span style={{ fontWeight: 'bold', color: 'green' }}>Paid (PayPal)</span>
                 </div>
             </div>
 

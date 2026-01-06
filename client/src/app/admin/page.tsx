@@ -3,16 +3,22 @@ import React from 'react';
 import styles from './Admin.module.css';
 import { FaShoppingBag, FaUsers, FaDollarSign, FaBox } from 'react-icons/fa';
 import { useProducts } from '@/context/ProductContext';
+import { useOrders } from '@/context/OrderContext';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function AdminDashboard() {
+    const { t } = useLanguage();
     const { products } = useProducts();
+    const { orders } = useOrders();
 
     // Calculate dynamic stats
     const totalProducts = products.length;
     const lowStockProducts = products.filter(p => (p.stock || 0) < 10).length;
-    // Mock sales/order logic for now as we don't have OrderContext yet
-    // But we can estimate 'potential' value or just keep static for Sales/Orders
-    // Let's keep Sales/Orders static but make Products dynamic
+
+    const totalSales = orders.reduce((acc, order) => acc + order.total, 0);
+    const totalOrdersCount = orders.length;
+    // Simple unique customer count based on email/ID
+    const uniqueCustomers = new Set(orders.map(o => o.userId)).size;
 
     return (
         <div>
@@ -24,70 +30,75 @@ export default function AdminDashboard() {
             <div className={styles.cardGrid}>
                 <div className={styles.card}>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <span className={styles.cardLabel}>Total Sales</span>
+                        <span className={styles.cardLabel}>{t('admin.sales')}</span>
                         <FaDollarSign color="#2ecc71" size={20} />
                     </div>
-                    <span className={styles.cardValue}>$12,450</span>
+                    <span className={styles.cardValue}>${totalSales.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 </div>
                 <div className={styles.card}>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <span className={styles.cardLabel}>Total Orders</span>
+                        <span className={styles.cardLabel}>{t('admin.orders')}</span>
                         <FaShoppingBag color="#3498db" size={20} />
                     </div>
-                    <span className={styles.cardValue}>148</span>
+                    <span className={styles.cardValue}>{totalOrdersCount}</span>
                 </div>
                 <div className={styles.card}>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <span className={styles.cardLabel}>Total Products</span>
+                        <span className={styles.cardLabel}>{t('admin.products')}</span>
                         <FaBox color="#f39c12" size={20} />
                     </div>
                     <span className={styles.cardValue}>{totalProducts}</span>
-                    <span style={{ fontSize: '0.8rem', color: '#666' }}>{lowStockProducts} Low Stock</span>
+                    <span style={{ fontSize: '0.8rem', color: '#666' }}>{lowStockProducts} {t('admin.low_stock')}</span>
                 </div>
                 <div className={styles.card}>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <span className={styles.cardLabel}>Customers</span>
+                        <span className={styles.cardLabel}>{t('admin.customers')}</span>
                         <FaUsers color="#9b59b6" size={20} />
                     </div>
-                    <span className={styles.cardValue}>85</span>
+                    <span className={styles.cardValue}>{uniqueCustomers}</span>
                 </div>
             </div>
 
             {/* Recent Orders Table */}
-            <h2 style={{ marginBottom: '1rem', color: '#444' }}>Recent Orders</h2>
+            <h2 style={{ marginBottom: '1rem', color: '#444' }}>{t('admin.recent_orders')}</h2>
             <div className={styles.tableContainer}>
                 <table className={styles.table}>
                     <thead>
                         <tr>
-                            <th>Order ID</th>
-                            <th>Customer</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Total</th>
+                            <th>{t('admin.order_id')}</th>
+                            <th>{t('admin.customer')}</th>
+                            <th>{t('admin.date')}</th>
+                            <th>{t('admin.status')}</th>
+                            <th>{t('admin.total')}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>#ORD-001</td>
-                            <td>John Doe</td>
-                            <td>Jan 1, 2026</td>
-                            <td><span className={`${styles.status} ${styles.completed}`}>Completed</span></td>
-                            <td>$54.99</td>
-                        </tr>
-                        <tr>
-                            <td>#ORD-002</td>
-                            <td>Jane Smith</td>
-                            <td>Jan 1, 2026</td>
-                            <td><span className={`${styles.status} ${styles.pending}`}>Pending</span></td>
-                            <td>$29.99</td>
-                        </tr>
-                        <tr>
-                            <td>#ORD-003</td>
-                            <td>Mike Jhonson</td>
-                            <td>Dec 31, 2025</td>
-                            <td><span className={`${styles.status} ${styles.shipped}`}>Shipped</span></td>
-                            <td>$112.50</td>
-                        </tr>
+                        {orders.length === 0 ? (
+                            <tr>
+                                <td colSpan={5} style={{ textAlign: 'center', color: '#888', padding: '2rem' }}>{t('admin.no_orders')}</td>
+                            </tr>
+                        ) : (
+                            orders.slice(0, 5).map(order => (
+                                <tr key={order.id}>
+                                    <td>{order.id}</td>
+                                    <td>{order.customerName}</td>
+                                    <td>{order.date}</td>
+                                    <td>
+                                        <span
+                                            className={`${styles.status} ${styles[order.status.toLowerCase()] || ''}`}
+                                            style={{
+                                                background: order.status === 'Processing' ? '#e2e3e5' : undefined,
+                                                color: order.status === 'Processing' ? '#383d41' : undefined,
+                                                border: order.status === 'Processing' ? '1px solid #d6d8db' : undefined
+                                            }}
+                                        >
+                                            {order.status}
+                                        </span>
+                                    </td>
+                                    <td>${order.total.toFixed(2)}</td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>

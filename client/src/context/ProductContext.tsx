@@ -25,7 +25,7 @@ export interface Product {
 const INITIAL_PRODUCTS: Product[] = [
     {
         id: "1",
-        title: "Organic Extra Virgin Olive Oil",
+        title: "product.organic.title",
         name: "Organic Extra Virgin Olive Oil",
         price: 24.99,
         rating: 5,
@@ -39,8 +39,8 @@ const INITIAL_PRODUCTS: Product[] = [
     },
     {
         id: "2",
-        title: "Cold Pressed Jaitun Oil",
-        name: "Cold Pressed Jaitun Oil",
+        title: "product.cold.title",
+        name: "Cold Pressed Olive Oil",
         price: 18.50,
         rating: 4,
         category: "Classic",
@@ -53,7 +53,7 @@ const INITIAL_PRODUCTS: Product[] = [
     },
     {
         id: "3",
-        title: "Infused Garlic Olive Oil",
+        title: "product.garlic.title",
         name: "Infused Garlic Olive Oil",
         price: 29.99,
         rating: 5,
@@ -67,7 +67,7 @@ const INITIAL_PRODUCTS: Product[] = [
     },
     {
         id: "4",
-        title: "Skin Care Olive Oil",
+        title: "product.skin.title",
         name: "Skin Care Olive Oil",
         price: 15.00,
         rating: 5,
@@ -81,7 +81,7 @@ const INITIAL_PRODUCTS: Product[] = [
     },
     {
         id: "5",
-        title: "Truffle Infused Oil",
+        title: "product.truffle.title",
         name: "Truffle Infused Oil",
         price: 35.00,
         rating: 5,
@@ -95,14 +95,14 @@ const INITIAL_PRODUCTS: Product[] = [
     },
     {
         id: "6",
-        title: "Hair Care Elixir",
+        title: "product.hair.title",
         name: "Hair Care Elixir",
         price: 22.00,
         rating: 4,
         category: "Beauty",
         image: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=500&q=80",
         stock: 25,
-        description: "Revitalize dry and damaged hair with our Jaitun Hair Care Elixir.",
+        description: "Revitalize dry and damaged hair with our Olive Hair Care Elixir.",
         features: ["Promotes Hair Growth", "Scalp Stimulation"],
         ingredients: "Olive Oil, Rosemary Oil, Peppermint Oil.",
         sizes: ["100ml", "200ml"]
@@ -124,11 +124,12 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         // Load from local storage or use initial data
-        const savedProducts = localStorage.getItem('jaitun_products');
+        const savedProducts = localStorage.getItem('jaitun_products_v2');
         if (savedProducts) {
-            // eslint-disable-next-line
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setProducts(JSON.parse(savedProducts));
         } else {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setProducts(INITIAL_PRODUCTS);
         }
     }, []);
@@ -136,7 +137,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         // Persist to local storage whenever products change
         if (products.length > 0) {
-            localStorage.setItem('jaitun_products', JSON.stringify(products));
+            localStorage.setItem('jaitun_products_v2', JSON.stringify(products));
         }
     }, [products]);
 

@@ -3,8 +3,10 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from '../../Admin.module.css';
 import { useProducts } from '@/context/ProductContext';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function AddProductPage() {
+    const { t } = useLanguage();
     const router = useRouter();
     const { addProduct } = useProducts();
     const [imageType, setImageType] = useState<'url' | 'file'>('url');
@@ -60,7 +62,7 @@ export default function AddProductPage() {
 
         if (imageType === 'file') {
             if (!imageFile) {
-                alert("Please select an image file.");
+                alert(t('admin.add_product.error_image'));
                 return;
             }
             // Convert file to Base64 to store in local storage (mock backend)
@@ -73,12 +75,12 @@ export default function AddProductPage() {
                 });
             } catch (err) {
                 console.error("Error reading file:", err);
-                alert("Failed to read image file.");
+                alert(t('admin.add_product.error_file'));
                 return;
             }
         } else {
             if (!product.image) {
-                alert("Please enter an image URL.");
+                alert(t('admin.add_product.error_url'));
                 return;
             }
         }
@@ -116,7 +118,7 @@ export default function AddProductPage() {
         };
 
         addProduct(newProduct);
-        alert("Product Added Successfully!");
+        alert(t('admin.add_product.success'));
 
         // Small delay to ensure state update propagates before navigation
         setTimeout(() => {
@@ -127,23 +129,23 @@ export default function AddProductPage() {
     return (
         <div>
             <div className={styles.header}>
-                <h1 className={styles.title}>Add New Product</h1>
+                <h1 className={styles.title}>{t('admin.add_product.title')}</h1>
             </div>
 
             <div className={styles.card} style={{ maxWidth: '800px' }}>
                 <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                        <label style={{ fontWeight: 600, color: '#444' }}>Product Name</label>
+                        <label style={{ fontWeight: 600, color: '#444' }}>{t('admin.add_product.name')}</label>
                         <input
                             type="text" name="name" value={product.name} onChange={handleChange} required
                             style={{ padding: '0.8rem', border: '1px solid #ddd', borderRadius: '4px' }}
-                            placeholder="e.g. Organic Basil Oil"
+                            placeholder={t('admin.add_product.name_placeholder')}
                         />
                     </div>
 
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                            <label style={{ fontWeight: 600, color: '#444' }}>Category</label>
+                            <label style={{ fontWeight: 600, color: '#444' }}>{t('admin.products.category')}</label>
                             <select
                                 name="category" value={product.category} onChange={handleChange}
                                 style={{ padding: '0.8rem', border: '1px solid #ddd', borderRadius: '4px' }}
@@ -155,7 +157,7 @@ export default function AddProductPage() {
                             </select>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                            <label style={{ fontWeight: 600, color: '#444' }}>Price ($)</label>
+                            <label style={{ fontWeight: 600, color: '#444' }}>{t('admin.add_product.price')}</label>
                             <input
                                 type="number" name="price" value={product.price} onChange={handleChange} required min="0" step="0.01"
                                 style={{ padding: '0.8rem', border: '1px solid #ddd', borderRadius: '4px' }}
@@ -166,7 +168,7 @@ export default function AddProductPage() {
 
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                            <label style={{ fontWeight: 600, color: '#444' }}>Stock Quantity</label>
+                            <label style={{ fontWeight: 600, color: '#444' }}>{t('admin.add_product.stock')}</label>
                             <input
                                 type="number" name="stock" value={product.stock} onChange={handleChange} required min="0"
                                 style={{ padding: '0.8rem', border: '1px solid #ddd', borderRadius: '4px' }}
@@ -177,7 +179,7 @@ export default function AddProductPage() {
 
                     {/* Image Selection Section */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', background: '#f9f9f9', padding: '1rem', borderRadius: '8px' }}>
-                        <label style={{ fontWeight: 600, color: '#444' }}>Product Image</label>
+                        <label style={{ fontWeight: 600, color: '#444' }}>{t('admin.add_product.image')}</label>
 
                         <div style={{ display: 'flex', gap: '2rem', marginBottom: '0.5rem' }}>
                             <label style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -187,7 +189,7 @@ export default function AddProductPage() {
                                     onChange={() => setImageType('url')}
                                     style={{ accentColor: '#eebb2d' }}
                                 />
-                                Image URL
+                                {t('admin.add_product.image_url')}
                             </label>
                             <label style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                 <input
@@ -196,7 +198,7 @@ export default function AddProductPage() {
                                     onChange={() => setImageType('file')}
                                     style={{ accentColor: '#eebb2d' }}
                                 />
-                                Upload File
+                                {t('admin.add_product.upload_file')}
                             </label>
                         </div>
 
@@ -205,7 +207,7 @@ export default function AddProductPage() {
                                 key="url-input"
                                 type="text" name="image" value={product.image || ''} onChange={handleChange}
                                 style={{ padding: '0.8rem', border: '1px solid #ddd', borderRadius: '4px' }}
-                                placeholder="https://example.com/image.jpg"
+                                placeholder={t('admin.add_product.url_placeholder')}
                             />
                         ) : (
                             <input
@@ -225,7 +227,7 @@ export default function AddProductPage() {
 
                     {/* Gallery Images Section */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', background: '#f9f9f9', padding: '1rem', borderRadius: '8px' }}>
-                        <label style={{ fontWeight: 600, color: '#444' }}>Gallery Images (Optional)</label>
+                        <label style={{ fontWeight: 600, color: '#444' }}>{t('admin.add_product.gallery')}</label>
                         <input
                             type="file" multiple accept="image/*" onChange={handleGalleryChange}
                             style={{ padding: '0.8rem', border: '1px solid #ddd', borderRadius: '4px', background: 'white' }}
@@ -241,11 +243,11 @@ export default function AddProductPage() {
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                        <label style={{ fontWeight: 600, color: '#444' }}>Description</label>
+                        <label style={{ fontWeight: 600, color: '#444' }}>{t('admin.add_product.description')}</label>
                         <textarea
                             name="description" value={product.description} onChange={handleChange} required rows={4}
                             style={{ padding: '0.8rem', border: '1px solid #ddd', borderRadius: '4px', fontFamily: 'inherit' }}
-                            placeholder="Product description..."
+                            placeholder={t('admin.add_product.desc_placeholder')}
                         />
                     </div>
 
@@ -255,13 +257,13 @@ export default function AddProductPage() {
                             onClick={() => router.back()}
                             style={{ padding: '0.8rem 1.5rem', background: '#ccc', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 600 }}
                         >
-                            Cancel
+                            {t('admin.add_product.cancel')}
                         </button>
                         <button
                             type="submit"
                             style={{ padding: '0.8rem 1.5rem', background: '#eebb2d', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 600 }}
                         >
-                            Save Product
+                            {t('admin.add_product.save')}
                         </button>
                     </div>
                 </form>

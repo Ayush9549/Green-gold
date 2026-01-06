@@ -7,43 +7,45 @@ import styles from './Home.module.css';
 import { motion } from 'framer-motion';
 import { FaLeaf, FaHeart, FaShippingFast, FaUser, FaFlask, FaCheckCircle, FaCertificate } from 'react-icons/fa';
 import Image from 'next/image';
+import { useLanguage } from '@/context/LanguageContext';
 
 const FEATURED_PRODUCTS = [
   {
     id: 1,
-    title: "Organic Extra Virgin Olive Oil",
+    title: "product.organic.title",
     price: 24.99,
     rating: 5,
-    category: "Premium",
+    category: "category.premium",
     image: "https://images.unsplash.com/photo-1474979266404-7cadd259d366?auto=format&fit=crop&w=500&q=80"
   },
   {
     id: 2,
-    title: "Cold Pressed Jaitun Oil",
+    title: "product.cold.title",
     price: 18.50,
     rating: 4,
-    category: "Classic",
+    category: "category.classic",
     image: "https://images.unsplash.com/photo-1542542526-2df73eb0e869?auto=format&fit=crop&w=500&q=80"
   },
   {
     id: 3,
-    title: "Infused Garlic Olive Oil",
+    title: "product.garlic.title",
     price: 29.99,
     rating: 5,
-    category: "Infused",
+    category: "category.infused",
     image: "https://images.unsplash.com/photo-1504918731362-e1f44ac1349b?auto=format&fit=crop&w=500&q=80"
   },
   {
     id: 4,
-    title: "Skin Care Olive Oil",
+    title: "product.skin.title",
     price: 15.00,
     rating: 5,
-    category: "Beauty",
+    category: "category.beauty",
     image: "https://images.unsplash.com/photo-1620917670397-a333b79d88c1?auto=format&fit=crop&w=500&q=80"
   }
 ];
 
 export default function Home() {
+  const { t } = useLanguage();
   return (
     <main>
       <script
@@ -54,10 +56,10 @@ export default function Home() {
             "@graph": [
               {
                 "@type": "Organization",
-                "name": "Green Gold Jaitun Oil",
+                "name": "Green Gold Olive Oil",
                 "url": "https://green-gold.vercel.app",
                 "logo": "https://green-gold.vercel.app/logo.png",
-                "description": "Premium Cold Pressed Jaitun Oil (Olive Oil) provider.",
+                "description": "Premium Cold Pressed Olive Oil (Olive Oil) provider.",
                 "sameAs": [
                   "https://facebook.com/greengold",
                   "https://instagram.com/greengold",
@@ -66,7 +68,7 @@ export default function Home() {
               },
               {
                 "@type": "WebSite",
-                "name": "Green Gold Jaitun Oil",
+                "name": "Green Gold Olive Oil",
                 "url": "https://green-gold.vercel.app",
                 "potentialAction": {
                   "@type": "SearchAction",
@@ -91,7 +93,7 @@ export default function Home() {
         }}>
           <Image
             src="/hero-image.png"
-            alt="Jaitun Oil Background"
+            alt="Olive Oil Background"
             fill
             style={{ objectFit: 'cover', filter: 'brightness(0.5)' }}
             priority
@@ -105,13 +107,12 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             style={{ paddingLeft: '10rem' }}
           >
-            <h1 className={styles.heroTitle}>Pure Gold from Nature</h1>
+            <h1 className={styles.heroTitle}>{t('home.hero.title')}</h1>
             <p className={styles.heroSubtitle}>
-              Experience the richness of premium, cold-pressed Green Gold (Olive Oil).
-              Sourced globally, delivered locally.
+              {t('home.hero.subtitle')}
             </p>
 
-            <a href="/shop" className="btn btn-primary">Shop Now</a>
+            <a href="/shop" className="btn btn-primary">{t('hero.cta')}</a>
           </motion.div>
         </div>
       </section>
@@ -119,13 +120,13 @@ export default function Home() {
       {/* Features Section (USP) */}
       <section className={styles.features}>
         <div className="container">
-          <h2 className={styles.sectionTitle}>Why Choose Green Gold?</h2>
+          <h2 className={styles.sectionTitle}>{t('home.why')}</h2>
           <div className={styles.featureGrid}>
             {[
-              { icon: <FaLeaf />, title: "100% Pure", desc: "Virgin & organic, directly from the farm." },
-              { icon: <FaLeaf />, title: "Cold Pressed", desc: "Retains all natural nutrients and flavor." }, // Need icon for Cold Pressed, using Leaf for now or Flask
-              { icon: <FaFlask />, title: "No Chemicals", desc: "Zero additives, preservatives, or artificial colors." },
-              { icon: <FaCheckCircle />, title: "Lab Tested", desc: "Certified for quality and purity." }
+              { icon: <FaLeaf />, title: "feature.pure.title", desc: "feature.pure.desc" },
+              { icon: <FaLeaf />, title: "feature.cold.title", desc: "feature.cold.desc" }, // Need icon for Cold Pressed, using Leaf for now or Flask
+              { icon: <FaFlask />, title: "feature.chem.title", desc: "feature.chem.desc" },
+              { icon: <FaCheckCircle />, title: "feature.lab.title", desc: "feature.lab.desc" }
             ].map((feature, index) => (
               <motion.div
                 key={index}
@@ -136,8 +137,8 @@ export default function Home() {
                 viewport={{ once: true }}
               >
                 <div className={styles.featureIcon}>{feature.icon}</div>
-                <h3 className={styles.featureTitle}>{feature.title}</h3>
-                <p>{feature.desc}</p>
+                <h3 className={styles.featureTitle}>{t(feature.title)}</h3>
+                <p>{t(feature.desc)}</p>
               </motion.div>
             ))}
           </div>
@@ -147,7 +148,7 @@ export default function Home() {
       {/* Product Showcase */}
       <section className={styles.productsSection}>
         <div className="container">
-          <h2 className={styles.sectionTitle}>Featured Collections</h2>
+          <h2 className={styles.sectionTitle}>{t('home.featured')}</h2>
           <div className={styles.featureGrid}>
             {FEATURED_PRODUCTS.map((product) => (
               <ProductCard key={product.id} {...product} />
@@ -170,13 +171,11 @@ export default function Home() {
               />
             </div>
             <div className={styles.aboutContent}>
-              <h2>The Essence of Purity</h2>
+              <h2>{t('home.about.title')}</h2>
               <p>
-                Our journey began with a simple mission: to bring the authentic taste and health benefits
-                of Mediterranean olive oil to your table. Every bottle of Green Gold is a promise of quality,
-                harvested from ancient groves and cold-pressed to preserve its natural goodness.
+                {t('about.text')}
               </p>
-              <a href="/about" className="btn btn-primary">Read Our Story</a>
+              <a href="/about" className="btn btn-primary">{t('about.cta')}</a>
             </div>
           </div>
         </div>
@@ -185,13 +184,12 @@ export default function Home() {
       {/* Testimonials */}
       <section className={styles.testimonialSection}>
         <div className="container">
-          <h2 className={styles.sectionTitle} style={{ color: 'white' }}>What Our Customers Say</h2>
+          <h2 className={styles.sectionTitle} style={{ color: 'white' }}>{t('home.testimonials')}</h2>
           <div className={styles.testimonialGrid}>
             {[1, 2, 3].map((_, i) => (
               <div key={i} className={styles.testimonialCard}>
                 <p className={styles.testimonialQuote}>
-                  &quot;Absolutely the best olive oil I&apos;ve ever tasted. The flavor is rich and authentic.
-                  I use it for everything from cooking to salads!&quot;
+                  &quot;{t('testimonial.quote')}&quot;
                 </p>
                 <div className={styles.testimonialAuthor}>
                   <div className={styles.authorAvatar}><FaUser /></div>
@@ -209,19 +207,19 @@ export default function Home() {
       {/* Certifications Section */}
       <section style={{ padding: '4rem 0', background: '#f9f9f9', textAlign: 'center' }}>
         <div className="container">
-          <h2 className={styles.sectionTitle} style={{ color: '#333', marginBottom: '3rem' }}>Certified for Excellence</h2>
+          <h2 className={styles.sectionTitle} style={{ color: '#333', marginBottom: '3rem' }}>{t('home.cert.title')}</h2>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '4rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <div style={{ textAlign: 'center' }}>
               <FaCertificate size={50} color="#556b2f" />
-              <h3 style={{ marginTop: '1rem' }}>FSSAI Certified</h3>
+              <h3 style={{ marginTop: '1rem' }}>{t('cert.fssai')}</h3>
             </div>
             <div style={{ textAlign: 'center' }}>
               <FaLeaf size={50} color="#556b2f" />
-              <h3 style={{ marginTop: '1rem' }}>100% Organic</h3>
+              <h3 style={{ marginTop: '1rem' }}>{t('cert.organic')}</h3>
             </div>
             <div style={{ textAlign: 'center' }}>
               <FaCheckCircle size={50} color="#556b2f" />
-              <h3 style={{ marginTop: '1rem' }}>ISO 9001:2015</h3>
+              <h3 style={{ marginTop: '1rem' }}>{t('cert.iso')}</h3>
             </div>
           </div>
         </div>

@@ -43,7 +43,7 @@ export default function ShippingPolicy() {
                 <section className={styles.section}>
                     <h2 className={styles.sectionTitle}>4. International Shipping</h2>
                     <div className={styles.content}>
-                        <p>We absolutely ship worldwide! Jaitun Oil is a global brand. Shipping rates for international orders vary by country and will be calculated at checkout.</p>
+                        <p>We absolutely ship worldwide! Olive Oil is a global brand. Shipping rates for international orders vary by country and will be calculated at checkout.</p>
                     </div>
                 </section>
             </div>

@@ -19,7 +19,7 @@ const FAQS = [
         answer: "Cold pressing means extracting the oil at temperatures below 80°F (27°C). This preserves the delicate flavors, aromas, and most importantly, the nutritional value (polyphenols and vitamins) that heat processing destroys."
     },
     {
-        question: "Can I use Jaitun Oil for cooking?",
+        question: "Can I use Olive Oil for cooking?",
         answer: "Absolutely. Our Regular Cold Pressed Oil has a higher smoke point suitable for sautéing and baking. Our Extra Virgin Oil is best used for low-heat cooking, dressings, and finishing to maintain its flavor profile."
     },
     {

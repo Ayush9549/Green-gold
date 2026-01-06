@@ -5,31 +5,33 @@ import Footer from '@/components/Footer';
 import styles from './Benefits.module.css';
 import { FaHeart, FaWeight, FaSpa, FaShieldAlt } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function BenefitsPage() {
+    const { t } = useLanguage();
     const benefits = [
         {
             icon: <FaHeart size={40} color="#556b2f" />,
-            title: "Heart Health",
-            desc: "Olive oil is rich in monounsaturated fats, which help lower bad cholesterol (LDL) and maintain healthy blood pressure levels. It's a cornerstone of the heart-healthy Mediterranean diet.",
+            title: "benefits.heart.title",
+            desc: "benefits.heart.desc",
             img: "https://images.unsplash.com/photo-1599423300746-b62507ac97f5?auto=format&fit=crop&w=500&q=80"
         },
         {
             icon: <FaWeight size={40} color="#556b2f" />,
-            title: "Weight Management",
-            desc: "Despite being a fat, olive oil can aid in weight loss. The healthy fats increase satiety, helping you feel full longer and reducing the urge to snack on unhealthy foods.",
+            title: "benefits.weight.title",
+            desc: "benefits.weight.desc",
             img: "https://images.unsplash.com/photo-1576402187880-3b00e7a1e0f5?auto=format&fit=crop&w=500&q=80"
         },
         {
             icon: <FaSpa size={40} color="#556b2f" />,
-            title: "Skin & Hair Care",
-            desc: "Rich in Vitamin E and antioxidants, olive oil nourishes the skin, combats aging signs, and strengthens hair from root to tip. It's a natural moisturizer and protector.",
+            title: "benefits.skin.title",
+            desc: "benefits.skin.desc",
             img: "https://images.unsplash.com/photo-1556228720-1957be91923b?auto=format&fit=crop&w=500&q=80"
         },
         {
             icon: <FaShieldAlt size={40} color="#556b2f" />,
-            title: "Anti-Inflammatory",
-            desc: "Contains oleocanthal, a compound with potent anti-inflammatory properties similar to ibuprofen. It helps reduce inflammation in the body and supports overall immunity.",
+            title: "benefits.anti.title",
+            desc: "benefits.anti.desc",
             img: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=500&q=80"
         }
     ];
@@ -40,8 +42,8 @@ export default function BenefitsPage() {
 
             <header className={styles.pageHeader}>
                 <div className="container">
-                    <h1 className={styles.title}>The Golden Elixir of Health</h1>
-                    <p>Discover the science-backed benefits of Jaitun Oil</p>
+                    <h1 className={styles.title}>{t('benefits.title')}</h1>
+                    <p>{t('benefits.subtitle')}</p>
                 </div>
             </header>
 
@@ -64,17 +66,16 @@ export default function BenefitsPage() {
                         </div>
                         <div className={styles.benefitContent} style={{ flex: 1 }}>
                             <div style={{ marginBottom: '1rem' }}>{b.icon}</div>
-                            <h2>{b.title}</h2>
-                            <p>{b.desc}</p>
+                            <h2>{t(b.title)}</h2>
+                            <p>{t(b.desc)}</p>
                         </div>
                     </motion.div>
                 ))}
 
                 <section className={styles.scienceSection}>
-                    <h2 className={styles.scienceTitle}>Backed by Science</h2>
+                    <h2 className={styles.scienceTitle}>{t('benefits.science.title')}</h2>
                     <p style={{ maxWidth: '800px', margin: '0 auto', fontSize: '1.1rem', color: '#f0f0f0' }}>
-                        Jaitun Oil consists mainly of oleic acid (up to 83%), with smaller amounts of other fatty acids including linoleic acid (up to 21%) and palmitic acid (up to 20%).
-                        Studies showed that replacing saturated fats with unsaturated fats like those found in olive oil reduces the risk of cardiovascular events.
+                        {t('benefits.science.text')}
                     </p>
                 </section>
             </div>

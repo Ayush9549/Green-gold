@@ -9,26 +9,60 @@ import Link from 'next/link';
 
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
+import { useCoupons } from '@/context/CouponContext';
+import { useLanguage } from '@/context/LanguageContext';
 import { useRouter } from 'next/navigation';
 
 export default function Cart() {
     const { cart, updateQuantity, removeFromCart } = useCart();
     const { user, isAuthenticated } = useAuth();
+    const { validateCoupon } = useCoupons();
+    const { t } = useLanguage();
     const router = useRouter();
+
+    const [couponInput, setCouponInput] = useState('');
+    const [appliedCoupon, setAppliedCoupon] = useState<any>(null);
+    const [couponError, setCouponError] = useState('');
+    const [couponSuccess, setCouponSuccess] = useState('');
 
     // Use 'cart' from context instead of local state 'cartItems'
     const cartItems = cart;
 
     const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
     const shipping = subtotal > 50 ? 0 : 10;
-    const total = subtotal + shipping;
+
+    let discount = 0;
+    if (appliedCoupon) {
+        if (appliedCoupon.type === 'percentage') {
+            discount = (subtotal * appliedCoupon.value) / 100;
+        } else {
+            discount = appliedCoupon.value;
+        }
+    }
+
+    const total = Math.max(0, subtotal + shipping - discount);
+
+    const handleApplyCoupon = () => {
+        setCouponError('');
+        setCouponSuccess('');
+        if (!couponInput.trim()) return;
+
+        const valid = validateCoupon(couponInput);
+        if (valid) {
+            setAppliedCoupon(valid);
+            setCouponSuccess(`Coupon ${valid.code} applied!`);
+        } else {
+            setAppliedCoupon(null);
+            setCouponError('Invalid or expired coupon code');
+        }
+    };
 
     return (
         <main>
             <Navbar />
 
             <div className={`container ${styles.cartContainer}`}>
-                <h1 className={styles.pageTitle}>Your Shopping Cart</h1>
+                <h1 className={styles.pageTitle}>{t('cart.title')}</h1>
 
                 {cartItems.length > 0 ? (
                     <div className={styles.cartGrid}>
@@ -54,8 +88,8 @@ export default function Cart() {
                                     <div className={styles.productInfo}>
                                         <img src={item.image} alt={item.title} className={styles.productImage} />
                                         <div className={styles.productDetails}>
-                                            <h3>{item.title}</h3>
-                                            <span className={styles.productCategory}>{item.category}</span>
+                                            <h3>{t(item.title)}</h3>
+                                            <span className={styles.productCategory}>{t(item.category)}</span>
                                         </div>
                                     </div>
 
@@ -92,15 +126,32 @@ export default function Cart() {
                                 <span>{shipping === 0 ? <span style={{ color: 'green' }}>Free</span> : `$${shipping.toFixed(2)}`}</span>
                             </div>
 
-                            <div style={{ margin: '1rem 0', display: 'flex', gap: '0.5rem' }}>
-                                <input
-                                    type="text"
-                                    placeholder="Coupon Code"
-                                    style={{ flex: 1, padding: '0.5rem', border: '1px solid #ddd', borderRadius: '4px' }}
-                                />
-                                <button style={{ padding: '0.5rem 1rem', background: '#333', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-                                    Apply
-                                </button>
+                            {/* Discount Row */}
+                            {appliedCoupon && (
+                                <div className={styles.summaryRow}>
+                                    <span style={{ color: '#556b2f', fontWeight: 'bold' }}>Discount ({appliedCoupon.code})</span>
+                                    <span style={{ color: '#556b2f', fontWeight: 'bold' }}>-${discount.toFixed(2)}</span>
+                                </div>
+                            )}
+
+                            <div style={{ margin: '1rem 0', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                    <input
+                                        type="text"
+                                        placeholder="Coupon Code"
+                                        value={couponInput}
+                                        onChange={(e) => setCouponInput(e.target.value)}
+                                        style={{ flex: 1, padding: '0.5rem', border: '1px solid #ddd', borderRadius: '4px' }}
+                                    />
+                                    <button
+                                        onClick={handleApplyCoupon}
+                                        style={{ padding: '0.5rem 1rem', background: '#333', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                                    >
+                                        Apply
+                                    </button>
+                                </div>
+                                {couponError && <p style={{ color: '#e74c3c', fontSize: '0.85rem', margin: 0 }}>{couponError}</p>}
+                                {couponSuccess && <p style={{ color: '#556b2f', fontSize: '0.85rem', margin: 0 }}>{couponSuccess}</p>}
                             </div>
 
                             <div className={styles.summaryTotal}>
@@ -110,25 +161,15 @@ export default function Cart() {
 
                             <button
                                 className={styles.checkoutBtn}
-                                disabled={user?.email === 'greengold123@gmail.com'}
-                                style={{
-                                    opacity: user?.email === 'greengold123@gmail.com' ? 0.5 : 1,
-                                    cursor: user?.email === 'greengold123@gmail.com' ? 'not-allowed' : 'pointer'
-                                }}
                                 onClick={() => {
-                                    if (user?.email === 'greengold123@gmail.com') return;
-
-                                    if (!isAuthenticated) {
-                                        alert("Please login to continue.");
-                                        router.push('/login');
-                                    } else if (!user?.address?.street) { // Basic check if address exists
-                                        router.push('/checkout/address');
+                                    if (!isAuthenticated || user?.email === 'greengold123@gmail.com') {
+                                        router.push('/login?redirect=/checkout/address');
                                     } else {
-                                        router.push('/checkout/payment');
+                                        router.push('/checkout/address');
                                     }
                                 }}
                             >
-                                {user?.email === 'greengold123@gmail.com' ? "Admin Checkout Restricted" : <>Proceed to Checkout <FaArrowRight /></>}
+                                {t('cart.checkout')} <FaArrowRight />
                             </button>
 
                             <div style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.9rem', color: '#666' }}>

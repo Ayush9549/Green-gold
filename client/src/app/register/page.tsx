@@ -8,8 +8,10 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { toast, Toaster } from 'react-hot-toast';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Register() {
+    const { t } = useLanguage();
     const router = useRouter();
     const { login: authLogin } = useAuth(); // Assuming useAuth has login to set user state
 
@@ -35,7 +37,7 @@ export default function Register() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (formData.password !== formData.confirmPassword) {
-            toast.error("Passwords do not match!");
+            toast.error(t('register.error.password_mismatch'));
             return;
         }
 
@@ -64,14 +66,14 @@ export default function Register() {
             const otpData = await otpRes.json();
 
             if (otpData.success) {
-                toast.success(`OTP Sent to ${formData.email}`);
+                toast.success(`${t('register.success.otp_sent')} ${formData.email}`);
                 setShowOtpModal(true);
             } else {
                 toast.error(otpData.message);
             }
         } catch (error) {
             console.error(error);
-            toast.error("Something went wrong");
+            toast.error(t('register.error.generic'));
         } finally {
             setLoading(false);
         }
@@ -94,7 +96,7 @@ export default function Register() {
             const data = await res.json();
 
             if (data.success) {
-                toast.success("Registration Successful!");
+                toast.success(t('register.success.registered'));
                 // Auto Login
                 localStorage.setItem('token', data.token);
                 authLogin(data.user);
@@ -104,7 +106,7 @@ export default function Register() {
             }
         } catch (error) {
             console.error(error);
-            toast.error("Registration Failed");
+            toast.error(t('register.error.failed'));
         } finally {
             setLoading(false);
         }
@@ -116,10 +118,10 @@ export default function Register() {
             <Navbar />
             <div className={styles.authContainer}>
                 <div className={styles.authCard}>
-                    <h1 className={styles.title}>Create Account</h1>
+                    <h1 className={styles.title}>{t('register.title')}</h1>
                     <form onSubmit={handleSubmit}>
                         <div className={styles.formGroup}>
-                            <label className={styles.label} htmlFor="name">Full Name</label>
+                            <label className={styles.label} htmlFor="name">{t('register.name')}</label>
                             <input
                                 type="text"
                                 name="name"
@@ -127,11 +129,11 @@ export default function Register() {
                                 value={formData.name}
                                 onChange={handleChange}
                                 required
-                                placeholder="John Doe"
+                                placeholder={t('register.placeholder.name')}
                             />
                         </div>
                         <div className={styles.formGroup}>
-                            <label className={styles.label} htmlFor="email">Email Address</label>
+                            <label className={styles.label} htmlFor="email">{t('register.email')}</label>
                             <input
                                 type="email"
                                 name="email"
@@ -139,11 +141,11 @@ export default function Register() {
                                 value={formData.email}
                                 onChange={handleChange}
                                 required
-                                placeholder="you@example.com"
+                                placeholder={t('register.placeholder.email')}
                             />
                         </div>
                         <div className={styles.formGroup} style={{ position: 'relative' }}>
-                            <label className={styles.label} htmlFor="password">Password</label>
+                            <label className={styles.label} htmlFor="password">{t('register.password')}</label>
                             <input
                                 type={showPassword ? "text" : "password"}
                                 name="password"
@@ -165,7 +167,7 @@ export default function Register() {
                             </button>
                         </div>
                         <div className={styles.formGroup} style={{ position: 'relative' }}>
-                            <label className={styles.label} htmlFor="confirmPassword">Confirm Password</label>
+                            <label className={styles.label} htmlFor="confirmPassword">{t('register.confirm_password')}</label>
                             <input
                                 type={showConfirmPassword ? "text" : "password"}
                                 name="confirmPassword"
@@ -187,11 +189,11 @@ export default function Register() {
                             </button>
                         </div>
                         <button type="submit" className={styles.submitBtn} disabled={loading}>
-                            {loading ? "Processing..." : "Sign Up"}
+                            {loading ? t('register.processing') : t('register.submit')}
                         </button>
                     </form>
                     <div className={styles.links}>
-                        <p>Already have an account? <Link href="/login" className={styles.link}>Sign in</Link></p>
+                        <p>{t('register.have_account')} <Link href="/login" className={styles.link}>{t('register.signin')}</Link></p>
                     </div>
                 </div>
             </div>
@@ -203,14 +205,14 @@ export default function Register() {
                     backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000
                 }}>
                     <div style={{ background: 'white', padding: '2rem', borderRadius: '12px', width: '90%', maxWidth: '400px', textAlign: 'center' }}>
-                        <h2 style={{ color: 'var(--color-primary)', marginBottom: '1rem' }}>Verify Email</h2>
-                        <p style={{ marginBottom: '1.5rem', color: '#666' }}>Enter the 6-digit code sent to {formData.email}</p>
+                        <h2 style={{ color: 'var(--color-primary)', marginBottom: '1rem' }}>{t('register.otp.title')}</h2>
+                        <p style={{ marginBottom: '1.5rem', color: '#666' }}>{t('register.otp.message')} {formData.email}</p>
 
                         <input
                             type="text"
                             value={otp}
                             onChange={(e) => setOtp(e.target.value)}
-                            placeholder="Enter OTP"
+                            placeholder={t('register.otp.placeholder')}
                             maxLength={6}
                             style={{
                                 width: '100%', padding: '1rem', fontSize: '1.2rem',
@@ -228,7 +230,7 @@ export default function Register() {
                                 fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer'
                             }}
                         >
-                            {loading ? "Verifying..." : "Verify & Login"}
+                            {loading ? t('register.otp.verifying') : t('register.otp.verify')}
                         </button>
 
                         <button
@@ -238,7 +240,7 @@ export default function Register() {
                                 color: '#999', cursor: 'pointer', textDecoration: 'underline'
                             }}
                         >
-                            Cancel
+                            {t('register.otp.cancel')}
                         </button>
                     </div>
                 </div>

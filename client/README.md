@@ -1,6 +1,6 @@
-# Jaitun Oil - Premium eCommerce Store
+# Olive Oil - Premium eCommerce Store
 
-Welcome to the **Jaitun Oil** official eCommerce platform. This project is a modern, high-performance web application designed to sell premium organic olive oil products globally. It features a stunning, animated user interface and a robust backend infrastructure.
+Welcome to the **Olive Oil** official eCommerce platform. This project is a modern, high-performance web application designed to sell premium organic olive oil products globally. It features a stunning, animated user interface and a robust backend infrastructure.
 
 ## 🚀 Technology Stack
 
