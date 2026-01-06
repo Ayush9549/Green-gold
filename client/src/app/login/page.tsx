@@ -19,29 +19,23 @@ export default function Login() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Admin Validation Hardcoded
+        // Prevent Admin login on public page
         if (formData.email === 'greengold123@gmail.com') {
-            if (formData.password !== 'Greengold@123') {
-                alert("Invalid password for admin access");
-                return;
-            }
+            alert("Please use the dedicated Admin Login page.");
+            router.push('/admin-login');
+            return;
         }
 
         // Simulate login - In real app, validate with backend
         const mockUser = {
-            name: formData.email === 'greengold123@gmail.com' ? "Admin User" : "Test User",
+            name: "Test User",
             email: formData.email,
             // address: undefined // Intentionally undefined to test address flow
         };
 
         login(mockUser);
-
-        if (formData.email === 'greengold123@gmail.com') {
-            router.push('/admin');
-        } else {
-            alert("Logged in successfully!");
-            router.push('/');
-        }
+        alert("Logged in successfully!");
+        router.push('/');
     };
 
     return (

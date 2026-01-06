@@ -108,17 +108,27 @@ export default function Cart() {
                                 <span>${total.toFixed(2)}</span>
                             </div>
 
-                            <button className={styles.checkoutBtn} onClick={() => {
-                                if (!isAuthenticated) {
-                                    alert("Please login to continue.");
-                                    router.push('/login');
-                                } else if (!user?.address?.street) { // Basic check if address exists
-                                    router.push('/checkout/address');
-                                } else {
-                                    router.push('/checkout/payment');
-                                }
-                            }}>
-                                Proceed to Checkout <FaArrowRight />
+                            <button
+                                className={styles.checkoutBtn}
+                                disabled={user?.email === 'greengold123@gmail.com'}
+                                style={{
+                                    opacity: user?.email === 'greengold123@gmail.com' ? 0.5 : 1,
+                                    cursor: user?.email === 'greengold123@gmail.com' ? 'not-allowed' : 'pointer'
+                                }}
+                                onClick={() => {
+                                    if (user?.email === 'greengold123@gmail.com') return;
+
+                                    if (!isAuthenticated) {
+                                        alert("Please login to continue.");
+                                        router.push('/login');
+                                    } else if (!user?.address?.street) { // Basic check if address exists
+                                        router.push('/checkout/address');
+                                    } else {
+                                        router.push('/checkout/payment');
+                                    }
+                                }}
+                            >
+                                {user?.email === 'greengold123@gmail.com' ? "Admin Checkout Restricted" : <>Proceed to Checkout <FaArrowRight /></>}
                             </button>
 
                             <div style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.9rem', color: '#666' }}>

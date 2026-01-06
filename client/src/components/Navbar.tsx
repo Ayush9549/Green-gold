@@ -68,7 +68,13 @@ const Navbar = () => {
                         }} />
                     </div>
 
-                    {user ? (
+                    {/* User Profile / Login Logic */}
+                    {!user ? (
+                        <Link href="/login" className={styles.iconBtn} aria-label="Login">
+                            <FaUser />
+                            <span style={{ fontSize: '0.9rem', marginLeft: '5px' }}>Login</span>
+                        </Link>
+                    ) : user.email !== 'greengold123@gmail.com' ? (
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', lineHeight: '1.2' }}>
                                 <span style={{ fontSize: '0.85rem', fontWeight: 'bold', color: 'var(--color-primary-dark)' }}>
@@ -93,12 +99,7 @@ const Navbar = () => {
                                 {user.name?.charAt(0).toUpperCase()}
                             </div>
                         </div>
-                    ) : (
-                        <Link href="/login" className={styles.iconBtn} aria-label="Login">
-                            <FaUser />
-                            <span style={{ fontSize: '0.9rem', marginLeft: '5px' }}>Login</span>
-                        </Link>
-                    )}
+                    ) : null}
 
                     <Link href="/cart" className={styles.iconBtn} aria-label="Cart">
                         <FaShoppingCart />
