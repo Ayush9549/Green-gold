@@ -39,7 +39,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className={styles.adminContainer}>
             {/* Sidebar */}
             <aside className={styles.sidebar}>
-                <div className={styles.brand}>Jaitun Admin</div>
+                <div className={styles.brand}>Green Gold Admin</div>
                 <ul className={styles.navItems}>
                     <li>
                         <Link
