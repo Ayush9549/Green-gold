@@ -11,7 +11,9 @@ import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 import { useCoupons } from '@/context/CouponContext';
 import { useLanguage } from '@/context/LanguageContext';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { Coupon } from '@/context/CouponContext';
 
 export default function Cart() {
     const { cart, updateQuantity, removeFromCart } = useCart();
@@ -21,7 +23,7 @@ export default function Cart() {
     const router = useRouter();
 
     const [couponInput, setCouponInput] = useState('');
-    const [appliedCoupon, setAppliedCoupon] = useState<any>(null);
+    const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
     const [couponError, setCouponError] = useState('');
     const [couponSuccess, setCouponSuccess] = useState('');
 
@@ -86,7 +88,15 @@ export default function Cart() {
                                     exit={{ opacity: 0 }}
                                 >
                                     <div className={styles.productInfo}>
-                                        <img src={item.image} alt={item.title} className={styles.productImage} />
+                                        <div style={{ position: 'relative', width: '80px', height: '80px', borderRadius: '8px', overflow: 'hidden' }}>
+                                            <Image
+                                                src={item.image}
+                                                alt={item.title}
+                                                fill
+                                                style={{ objectFit: 'cover' }}
+                                                className={styles.productImage}
+                                            />
+                                        </div>
                                         <div className={styles.productDetails}>
                                             <h3>{t(item.title)}</h3>
                                             <span className={styles.productCategory}>{t(item.category)}</span>
@@ -185,7 +195,7 @@ export default function Cart() {
                     >
                         <FaShoppingBag size={50} color="#ccc" style={{ marginBottom: '1rem' }} />
                         <h2>Your cart is empty</h2>
-                        <p>Looks like you haven't found your perfect oil yet.</p>
+                        <p>Looks like you haven&apos;t found your perfect oil yet.</p>
                         <Link href="/shop" className={styles.continueBtn}>
                             Start Shopping
                         </Link>

@@ -31,7 +31,6 @@ export const CouponProvider = ({ children }: { children: ReactNode }) => {
             setCoupons(JSON.parse(savedCoupons));
         } else {
             // Default sample coupon
-            // eslint-disable-next-line react-hooks/set-state-in-effect
             setCoupons([
                 { id: '1', code: 'WELCOME10', type: 'percentage', value: 10, expirationDate: '2030-12-31', isActive: true }
             ]);

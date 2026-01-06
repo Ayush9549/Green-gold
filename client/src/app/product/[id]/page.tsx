@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
@@ -8,126 +8,9 @@ import { FaStar, FaMinus, FaPlus, FaCheckCircle, FaTruck, FaShieldAlt, FaLeaf, F
 import { useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
+import Image from 'next/image';
 
-// Extended Mock Data
-const PRODUCTS_DB: Record<string, any> = {
-    "1": {
-        id: 1,
-        title: "Organic Extra Virgin Olive Oil",
-        price: 24.99,
-        oldPrice: 32.00,
-        rating: 5,
-        category: "Premium",
-        description: "Our hallmark Organic Extra Virgin Olive Oil is cold-pressed within hours of harvest to preserve its distinct grassy aroma and peppery finish. Sourced from the finest organic groves, this oil is perfect for drizzling over salads, dipping bread, or finishing roasted vegetables.",
-        image: "https://images.unsplash.com/photo-1474979266404-7cadd259d366?auto=format&fit=crop&w=500&q=80",
-        features: ["Cold Pressed Extraction", "100% Certified Organic", "Single Origin (Spain)", "High Polyphenol Content"],
-        ingredients: "100% Organic Extra Virgin Olive Oil.",
-        nutrition: {
-            calories: "120 per tbsp",
-            fat: "14g",
-            protein: "0g",
-            carbs: "0g"
-        }
-    },
-    "2": {
-        id: 2,
-        title: "Cold Pressed Olive Oil",
-        price: 18.50,
-        rating: 4,
-        category: "Classic",
-        description: "A versatile kitchen staple, our Classic Cold Pressed Olive Oil offers a smooth, balanced flavor profile suitable for everyday cooking. Whether you're sautéing, grilling, or baking, this oil delivers consistent quality and health benefits.",
-        image: "https://images.unsplash.com/photo-1542542526-2df73eb0e869?auto=format&fit=crop&w=500&q=80",
-        features: ["Versatile Cooking Oil", "Rich Smooth Flavor", "Heart Healthy Fats", "All-Natural Process"],
-        ingredients: "100% Cold Pressed Olive Oil.",
-        nutrition: {
-            calories: "119 per tbsp",
-            fat: "13.5g",
-            protein: "0g",
-            carbs: "0g"
-        }
-    },
-    "3": {
-        id: 3,
-        title: "Infused Garlic Olive Oil",
-        price: 29.99,
-        rating: 5,
-        category: "Infused",
-        description: "Elevate your culinary creations with our Garlic Infused Olive Oil. We steep fresh, organic garlic cloves in our premium olive oil for weeks to achieve a robust and authentic garlic flavor without the hassle of chopping.",
-        image: "https://images.unsplash.com/photo-1504918731362-e1f44ac1349b?auto=format&fit=crop&w=500&q=80",
-        features: ["Real Garlic Infusion", "No Artificial Flavors", "Perfect for Marinades", "Gourmet Quality"],
-        ingredients: "Extra Virgin Olive Oil, Organic Garlic.",
-        nutrition: {
-            calories: "120 per tbsp",
-            fat: "14g",
-            protein: "0g",
-            carbs: "0g"
-        }
-    },
-    "4": {
-        id: 4,
-        title: "Skin Care Olive Oil",
-        price: 15.00,
-        rating: 5,
-        category: "Beauty",
-        description: "Discover the ancient beauty secret of olive oil. Specially filtered for cosmetic use, this oil is rich in Vitamin E and antioxidants to moisturize skin, strengthen nails, and add shine to hair. Non-comedogenic and ultra-hydrating.",
-        image: "https://images.unsplash.com/photo-1620917670397-a333b79d88c1?auto=format&fit=crop&w=500&q=80",
-        features: ["Cosmetic Grade", "Rich in Vitamin E", "Deep Moisturization", "Multi-purpose Beauty Oil"],
-        ingredients: "100% Pure Filtered Olive Oil.",
-        nutrition: {
-            usage: "Apply 2-3 drops to face or hair.",
-            benefits: "Hydration, Anti-aging, Glow"
-        }
-    },
-    "5": {
-        id: 5,
-        title: "Truffle Infused Oil",
-        price: 35.00,
-        rating: 5,
-        category: "Infused",
-        description: "A bottle of pure indulgence. We infuse our finest Extra Virgin Olive Oil with white truffles to create an earthy, aromatic finish that transforms simple dishes like pasta, risotto, and popcorn into gourmet experiences.",
-        image: "https://images.unsplash.com/photo-1474979266404-7cadd259d366?auto=format&fit=crop&w=500&q=80",
-        features: ["Real White Truffle", "Intense Aroma", "Luxury Garnish", "Artisanal Production"],
-        ingredients: "Extra Virgin Olive Oil, White Truffle Aroma, Dried Truffle.",
-        nutrition: {
-            calories: "120 per tbsp",
-            fat: "14g",
-            protein: "0g",
-            carbs: "0g"
-        }
-    },
-    "6": {
-        id: 6,
-        title: "Hair Care Elixir",
-        price: 22.00,
-        rating: 4,
-        category: "Beauty",
-        description: "Revitalize dry and damaged hair with our Olive Hair Care Elixir. Blended with rosemary and peppermint oils, this treatment stimulates the scalp, promotes growth, and leaves hair silky smooth without weighing it down.",
-        image: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=500&q=80",
-        features: ["Promotes Hair Growth", "Scalp Stimulation", "Lightweight Formula", "Paraben Free"],
-        ingredients: "Olive Oil, Rosemary Oil, Peppermint Oil, Vitamin E.",
-        nutrition: {
-            usage: "Massage into scalp before washing.",
-            benefits: "Strength, Shine, Growth"
-        }
-    },
-    "default": {
-        id: 0,
-        title: "Premium Olive Oil Product",
-        price: 29.99,
-        rating: 5,
-        category: "Special",
-        description: "Experience the luxury of our premium selected olive oils. Harvested with care and processed to perfection to bring you the gold standard of nature.",
-        image: "https://images.unsplash.com/photo-1508345228704-935cc84bf5e2?auto=format&fit=crop&w=500&q=80",
-        features: ["Premium Quality", "Artisanal Crafted", "Small Batch Production", "Ideal for Gifting"],
-        ingredients: "100% Natural Olive Oil.",
-        nutrition: {
-            calories: "120 per tbsp",
-            fat: "14g",
-            protein: "0g",
-            carbs: "0g"
-        }
-    }
-};
+
 
 const RELATED_PRODUCTS = [
     {
@@ -161,7 +44,7 @@ export default function ProductDetails() {
     const foundProduct = getProductById(id || "1");
 
     // Fallback if product not found (or while loading)
-    const product = foundProduct || {
+    const product = useMemo(() => foundProduct || {
         id: 0,
         title: t('product.not_found'),
         price: 0,
@@ -172,7 +55,7 @@ export default function ProductDetails() {
         features: [],
         ingredients: "N/A",
         nutrition: {}
-    };
+    }, [foundProduct, t]);
 
     // Context
     const { addToCart } = useCart();
@@ -183,8 +66,9 @@ export default function ProductDetails() {
     const [selectedSize, setSelectedSize] = useState('');
 
     // Sync currentImage and Size when product loads/changes
-    React.useEffect(() => {
+    useEffect(() => {
         if (product) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setCurrentImage(product.image);
             if (product.sizes && product.sizes.length > 0) {
                 setSelectedSize(product.sizes[0]);
@@ -231,11 +115,13 @@ export default function ProductDetails() {
                 <div className={styles.productGrid}>
                     {/* Left: Image */}
                     <div className={styles.imageSection}>
-                        <div className={styles.mainImageWrapper}>
-                            <img
+                        <div className={styles.mainImageWrapper} style={{ position: 'relative', height: '500px' }}>
+                            <Image
                                 src={currentImage || product.image}
                                 alt={product.title}
                                 className={styles.mainImage}
+                                fill
+                                style={{ objectFit: 'cover' }}
                             />
                         </div>
                         <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', flexWrap: 'wrap' }}>
@@ -244,11 +130,14 @@ export default function ProductDetails() {
                                 onClick={() => setCurrentImage(product.image)}
                                 style={{
                                     width: '80px', height: '80px', borderRadius: '8px', overflow: 'hidden', cursor: 'pointer',
-                                    border: currentImage === product.image ? '2px solid #556b2f' : '1px solid #ddd'
+                                    border: currentImage === product.image ? '2px solid #556b2f' : '1px solid #ddd',
+                                    position: 'relative'
                                 }}>
-                                <img
+                                <Image
                                     src={product.image}
-                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                    alt={`${product.title} main`}
+                                    fill
+                                    style={{ objectFit: 'cover' }}
                                 />
                             </div>
 
@@ -258,11 +147,14 @@ export default function ProductDetails() {
                                     onClick={() => setCurrentImage(imgUrl)}
                                     style={{
                                         width: '80px', height: '80px', borderRadius: '8px', overflow: 'hidden', cursor: 'pointer',
-                                        border: currentImage === imgUrl ? '2px solid #556b2f' : '1px solid #ddd'
+                                        border: currentImage === imgUrl ? '2px solid #556b2f' : '1px solid #ddd',
+                                        position: 'relative'
                                     }}>
-                                    <img
+                                    <Image
                                         src={imgUrl}
-                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                        alt={`${product.title} gallery ${i + 1}`}
+                                        fill
+                                        style={{ objectFit: 'cover' }}
                                     />
                                 </div>
                             ))}

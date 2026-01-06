@@ -15,7 +15,7 @@ export default function PrivacyPolicy() {
                 <section className={styles.section}>
                     <h2 className={styles.sectionTitle}>Overview</h2>
                     <div className={styles.content}>
-                        <p>Olive Oil ("we", "us", "our") respects your privacy and is committed to protecting the personal information you share with us. This policy describes how we collect, use, and share your information.</p>
+                        <p>Olive Oil (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;) respects your privacy and is committed to protecting the personal information you share with us. This policy describes how we collect, use, and share your information.</p>
                     </div>
                 </section>
 

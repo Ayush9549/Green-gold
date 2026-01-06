@@ -6,34 +6,13 @@ import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 
 
+import { useBlogs } from '@/context/BlogContext';
+
+
 export default function BlogPage() {
     const { t } = useLanguage();
-    const BLOG_POSTS = [
-        {
-            id: 1,
-            title: "blog.post1.title",
-            category: "blog.category.recipes",
-            date: "Oct 12, 2023",
-            image: "https://images.unsplash.com/photo-1546793665-c74683f339c1?auto=format&fit=crop&w=500&q=80",
-            excerpt: "blog.post1.excerpt"
-        },
-        {
-            id: 2,
-            title: "blog.post2.title",
-            category: "blog.category.cooking",
-            date: "Oct 25, 2023",
-            image: "https://images.unsplash.com/photo-1474979266404-7cadd259d366?auto=format&fit=crop&w=500&q=80",
-            excerpt: "blog.post2.excerpt"
-        },
-        {
-            id: 3,
-            title: "blog.post3.title",
-            category: "blog.category.health",
-            date: "Nov 03, 2023",
-            image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=500&q=80",
-            excerpt: "blog.post3.excerpt"
-        }
-    ];
+    const { blogs } = useBlogs();
+    const BLOG_POSTS = blogs;
     return (
         <main>
             <Navbar />

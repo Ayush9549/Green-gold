@@ -1,7 +1,7 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-type Language = 'en' | 'hi' | 'es' | 'fr' | 'de' | 'it' | 'pt' | 'zh' | 'ja' | 'ru' | 'ar';
+export type Language = 'en' | 'hi' | 'es' | 'fr' | 'de' | 'it' | 'pt' | 'zh' | 'ja' | 'ru' | 'ar';
 
 interface Translations {
     [key: string]: {
@@ -291,6 +291,7 @@ const translations: Translations = {
         'admin.nav.dashboard': 'Dashboard',
         'admin.nav.products': 'Products',
         'admin.nav.orders': 'Orders',
+        'admin.nav.blogs': 'Blogs',
         'admin.nav.coupons': 'Coupons',
         'admin.nav.back_to_store': 'Back to Store',
         'admin.nav.logout': 'Logout',
@@ -582,6 +583,7 @@ const translations: Translations = {
         'admin.nav.dashboard': 'डैशबोर्ड',
         'admin.nav.products': 'उत्पाद',
         'admin.nav.orders': 'ऑर्डर',
+        'admin.nav.blogs': 'ब्लॉग',
         'admin.nav.coupons': 'कूपन',
         'admin.nav.back_to_store': 'स्टोर पर वापस जाएं',
         'admin.nav.logout': 'लॉगआउट',
@@ -938,6 +940,7 @@ const translations: Translations = {
         'admin.nav.dashboard': 'Dashboard',
         'admin.nav.products': 'Prodotti',
         'admin.nav.orders': 'Ordini',
+        'admin.nav.blogs': 'Blog',
         'admin.nav.coupons': 'Coupon',
         'admin.nav.back_to_store': 'Torna al Negozio',
         'admin.nav.logout': 'Esci',

@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import Link from 'next/link';
-import { FaFacebookF, FaInstagram, FaTwitter, FaLeaf } from 'react-icons/fa';
+import { FaFacebookF, FaInstagram, FaTwitter } from 'react-icons/fa';
 import styles from './Footer.module.css';
 import { useLanguage } from '@/context/LanguageContext';
 

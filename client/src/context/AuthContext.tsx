@@ -43,7 +43,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             // eslint-disable-next-line react-hooks/set-state-in-effect
             setUser(JSON.parse(savedUser));
         }
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setIsLoading(false);
     }, []);
 

@@ -27,15 +27,17 @@ export default function TrackingPage() {
 
     useEffect(() => {
         if (order) {
-            // Simulate progress calculation base on status
+            let newProgress = 0;
             switch (order.status) {
-                case 'Pending': setProgress(10); break;
-                case 'Processing': setProgress(40); break;
-                case 'Shipped': setProgress(70); break;
-                case 'Completed': setProgress(100); break;
-                case 'Cancelled': setProgress(0); break;
-                default: setProgress(0);
+                case 'Pending': newProgress = 10; break;
+                case 'Processing': newProgress = 40; break;
+                case 'Shipped': newProgress = 70; break;
+                case 'Completed': newProgress = 100; break;
+                case 'Cancelled': newProgress = 0; break;
+                default: newProgress = 0;
             }
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setProgress(newProgress);
         }
     }, [order]);
 
@@ -94,7 +96,7 @@ export default function TrackingPage() {
                         zIndex: 1
                     }}>
                         <div style={{
-                            width: `${progress}%`,
+                            width: `${progress}% `,
                             height: '100%',
                             background: '#556b2f',
                             transition: 'width 1s ease'
@@ -139,8 +141,8 @@ export default function TrackingPage() {
                         <h3>{t('tracking.details')}</h3>
                         <p style={{ marginTop: '0.5rem', color: '#555' }}>
                             {t('tracking.package_status')} <strong>{order.status}</strong>.
-                            {order.status === 'Shipped' && ` ${t('tracking.shipped_msg')}`}
-                            {order.status === 'Processing' && ` ${t('tracking.processing_msg')}`}
+                            {order.status === 'Shipped' && ` ${t('tracking.shipped_msg')} `}
+                            {order.status === 'Processing' && ` ${t('tracking.processing_msg')} `}
                         </p>
                         <hr style={{ margin: '1rem 0', border: 'none', borderTop: '1px solid #ddd' }} />
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>

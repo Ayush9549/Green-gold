@@ -8,7 +8,18 @@ import { useSearchParams } from 'next/navigation';
 
 function OrderConfirmationContent() {
     const searchParams = useSearchParams();
-    const orderId = searchParams.get('id') || 'ORD-' + Math.floor(Math.random() * 100000);
+    const [orderId, setOrderId] = React.useState<string | null>(null);
+
+    React.useEffect(() => {
+        const id = searchParams.get('id');
+        if (id) {
+            setOrderId(id);
+        } else {
+            setOrderId('ORD-' + Math.floor(Math.random() * 100000));
+        }
+    }, [searchParams]);
+
+    if (!orderId) return <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>;
 
     return (
         <div style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '2rem' }}>

@@ -129,7 +129,6 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
             // eslint-disable-next-line react-hooks/set-state-in-effect
             setProducts(JSON.parse(savedProducts));
         } else {
-            // eslint-disable-next-line react-hooks/set-state-in-effect
             setProducts(INITIAL_PRODUCTS);
         }
     }, []);

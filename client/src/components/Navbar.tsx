@@ -1,14 +1,14 @@
 "use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { FaShoppingCart, FaUser, FaGlobe, FaLeaf, FaSearch, FaSignOutAlt, FaBox, FaBars, FaTimes } from 'react-icons/fa';
+
+import { FaShoppingCart, FaUser, FaGlobe, FaLeaf, FaSearch, FaBox, FaBars, FaTimes } from 'react-icons/fa';
 import styles from './Navbar.module.css';
 import { useRouter, usePathname } from 'next/navigation';
 
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage, Language } from '@/context/LanguageContext';
 
 const Navbar = () => {
     const { cartCount } = useCart();
@@ -58,13 +58,14 @@ const Navbar = () => {
                         <FaGlobe color="#556b2f" style={{ marginRight: '5px' }} />
                         <select
                             value={language}
-                            onChange={(e) => setLanguage(e.target.value as any)}
+                            onChange={(e) => setLanguage(e.target.value as Language)}
                             style={{ border: 'none', background: 'transparent', fontWeight: 'bold', color: '#556b2f', cursor: 'pointer', outline: 'none', fontSize: '0.9rem' }}
                         >
                             <option value="en">English</option>
                             <option value="hi">हिंदी</option>
                             <option value="es">Español</option>
                             <option value="fr">Français</option>
+                            <option value="de">Deutsch</option>
                             <option value="it">Italiano</option>
                             <option value="pt">Português</option>
                             <option value="zh">中文</option>

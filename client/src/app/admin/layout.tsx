@@ -2,10 +2,10 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { FaBox, FaShoppingBag, FaTicketAlt, FaBars, FaTimes, FaGlobe } from 'react-icons/fa';
+import { FaBox, FaShoppingBag, FaTicketAlt, FaBars, FaTimes, FaGlobe, FaNewspaper } from 'react-icons/fa';
 import styles from './Admin.module.css';
 import { useAuth } from '@/context/AuthContext';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage, Language } from '@/context/LanguageContext';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
@@ -69,7 +69,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                         <FaGlobe />
                         <select
                             value={language}
-                            onChange={(e) => setLanguage(e.target.value as any)}
+                            onChange={(e) => setLanguage(e.target.value as Language)}
                             style={{
                                 flex: 1,
                                 padding: '0.5rem',
@@ -98,37 +98,46 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     <li>
                         <Link
                             href="/admin"
-                            className={`${styles.navLink} ${pathname === '/admin' ? styles.active : ''}`}
+                            className={`${styles.navLink} ${pathname === "/admin" ? styles.active : ""}`}
                             onClick={() => setIsSidebarOpen(false)}
                         >
-                            {t('admin.nav.dashboard')}
+                            {t("admin.nav.dashboard")}
                         </Link>
                     </li>
                     <li>
                         <Link
                             href="/admin/products"
-                            className={`${styles.navLink} ${pathname?.startsWith('/admin/products') ? styles.active : ''}`}
+                            className={`${styles.navLink} ${pathname?.startsWith("/admin/products") ? styles.active : ""}`}
                             onClick={() => setIsSidebarOpen(false)}
                         >
-                            <FaBox /> {t('admin.nav.products')}
+                            <FaBox /> {t("admin.nav.products")}
                         </Link>
                     </li>
                     <li>
                         <Link
                             href="/admin/orders"
-                            className={`${styles.navLink} ${pathname?.startsWith('/admin/orders') ? styles.active : ''}`}
+                            className={`${styles.navLink} ${pathname?.startsWith("/admin/orders") ? styles.active : ""}`}
                             onClick={() => setIsSidebarOpen(false)}
                         >
-                            <FaShoppingBag /> {t('admin.nav.orders')}
+                            <FaShoppingBag /> {t("admin.nav.orders")}
+                        </Link>
+                    </li>
+                    <li>
+                        <Link
+                            href="/admin/blogs"
+                            className={`${styles.navLink} ${pathname?.startsWith("/admin/blogs") ? styles.active : ""}`}
+                            onClick={() => setIsSidebarOpen(false)}
+                        >
+                            <FaNewspaper /> {t("admin.nav.blogs")}
                         </Link>
                     </li>
                     <li>
                         <Link
                             href="/admin/coupons"
-                            className={`${styles.navLink} ${pathname?.startsWith('/admin/coupons') ? styles.active : ''}`}
+                            className={`${styles.navLink} ${pathname?.startsWith("/admin/coupons") ? styles.active : ""}`}
                             onClick={() => setIsSidebarOpen(false)}
                         >
-                            <FaTicketAlt /> {t('admin.nav.coupons')}
+                            <FaTicketAlt /> {t("admin.nav.coupons")}
                         </Link>
                     </li>
                     <li>

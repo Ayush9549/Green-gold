@@ -39,7 +39,7 @@ export default function MyOrdersPage() {
                 {myOrders.length === 0 ? (
                     <div style={{ textAlign: 'center', padding: '4rem 2rem', background: '#f9f9f9', borderRadius: '12px' }}>
                         <h2 style={{ color: '#555', marginBottom: '1rem' }}>No orders found</h2>
-                        <p style={{ color: '#888', marginBottom: '2rem' }}>Looks like you haven't placed any orders yet.</p>
+                        <p style={{ color: '#888', marginBottom: '2rem' }}>Looks like you haven&apos;t placed any orders yet.</p>
                         <Link href="/shop" style={{ background: '#556b2f', color: 'white', padding: '0.8rem 2rem', borderRadius: '50px', textDecoration: 'none', fontWeight: 'bold' }}>
                             Start Shopping
                         </Link>

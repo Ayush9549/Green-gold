@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, Suspense, useEffect } from 'react';
+import React, { useState, Suspense } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from '../Auth.module.css';
@@ -13,7 +13,7 @@ function LoginForm() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const redirectPath = searchParams.get('redirect') || '/';
-    const { login, isAuthenticated, user, isLoading } = useAuth();
+    const { login } = useAuth();
 
     const [formData, setFormData] = useState({ email: '', password: '' });
 

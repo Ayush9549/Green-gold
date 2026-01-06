@@ -38,6 +38,7 @@ export default function EditProductPage() {
         if (productId) {
             const foundProduct = getProductById(productId);
             if (foundProduct) {
+                // eslint-disable-next-line react-hooks/set-state-in-effect
                 setProduct(foundProduct);
                 setPreviewUrl(foundProduct.image);
                 // Detect if existing image is value or url, defaulting to url for now
@@ -54,7 +55,7 @@ export default function EditProductPage() {
             }
             setLoading(false);
         }
-    }, [productId, getProductById, router]);
+    }, [productId, getProductById, router, t]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         // Handle name/title alias mapping if needed, or just update state

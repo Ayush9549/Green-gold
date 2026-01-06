@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { FaTree, FaHandHoldingHeart, FaGlobeAmericas, FaAward } from 'react-icons/fa';
 
 import { useLanguage } from '@/context/LanguageContext';
+import Image from 'next/image';
 
 export default function About() {
     const { t } = useLanguage();
@@ -40,10 +41,14 @@ export default function About() {
                             viewport={{ once: true }}
                             transition={{ duration: 0.8 }}
                         >
-                            <img
-                                src="https://images.unsplash.com/photo-1565553642973-6a7aa615dfea?auto=format&fit=crop&w=1000&q=80"
-                                alt="Olive Grove"
-                            />
+                            <div style={{ position: 'relative', height: '500px', width: '100%', borderRadius: '12px', overflow: 'hidden' }}>
+                                <Image
+                                    src="https://images.unsplash.com/photo-1565553642973-6a7aa615dfea?auto=format&fit=crop&w=1000&q=80"
+                                    alt="Olive Grove"
+                                    fill
+                                    style={{ objectFit: 'cover' }}
+                                />
+                            </div>
                         </motion.div>
                         <motion.div
                             className={styles.storyContent}

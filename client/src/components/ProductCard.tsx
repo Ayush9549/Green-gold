@@ -2,7 +2,7 @@
 import React from 'react';
 import { FaStar, FaPlus } from 'react-icons/fa';
 import styles from './ProductCard.module.css';
-import Image from 'next/image';
+
 
 interface ProductCardProps {
     id: number | string;
@@ -15,6 +15,8 @@ interface ProductCardProps {
 
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const ProductCard: React.FC<ProductCardProps> = ({ id, title, price, rating, image, category }) => {
     const { addToCart } = useCart();
@@ -22,19 +24,20 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, title, price, rating, ima
 
     const handleAddToCart = () => {
         addToCart({ id, title, price, image, category, quantity: 1 });
-        // alert(`Added ${title} to cart successfully!`); // Removed per user request
     };
 
     return (
         <div className={styles.card}>
             <div className={styles.imageWrapper}>
-                <a href={`/product/${id}`} style={{ display: 'block', height: '100%', width: '100%' }}>
-                    <img
+                <Link href={`/product/${id}`} style={{ display: 'block', height: '100%', width: '100%', position: 'relative' }}>
+                    <Image
                         src={image}
                         alt={title}
                         className={styles.image}
+                        fill
+                        style={{ objectFit: 'cover' }}
                     />
-                </a>
+                </Link>
             </div>
             <div className={styles.content}>
                 <span className={styles.category}>{t(category)}</span>

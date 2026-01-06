@@ -6,6 +6,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { ProductProvider } from "@/context/ProductContext";
 import { CouponProvider } from "@/context/CouponContext";
 import { LanguageProvider } from "@/context/LanguageContext";
+import { BlogProvider } from "@/context/BlogContext";
 
 export const metadata: Metadata = {
   title: {
@@ -65,7 +66,9 @@ export default function RootLayout({
               <CartProvider>
                 <OrderProvider>
                   <CouponProvider>
-                    {children}
+                    <BlogProvider>
+                      {children}
+                    </BlogProvider>
                   </CouponProvider>
                 </OrderProvider>
               </CartProvider>

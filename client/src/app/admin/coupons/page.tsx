@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import styles from '../Admin.module.css';
-import { useCoupons, Coupon } from '@/context/CouponContext';
+import { useCoupons } from '@/context/CouponContext';
 import { FaTrash, FaPlus, FaTag } from 'react-icons/fa';
 import { useLanguage } from '@/context/LanguageContext';
 

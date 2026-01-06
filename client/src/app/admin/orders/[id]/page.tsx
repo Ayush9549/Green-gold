@@ -1,9 +1,9 @@
 "use client";
 import React from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { useOrders } from '@/context/OrderContext';
+import { useOrders, Order } from '@/context/OrderContext';
 import styles from '../../Admin.module.css';
-import { FaArrowLeft, FaBox, FaCreditCard, FaMapMarkerAlt, FaUser } from 'react-icons/fa';
+import { FaArrowLeft, FaCreditCard, FaMapMarkerAlt, FaUser } from 'react-icons/fa';
 import { useLanguage } from '@/context/LanguageContext';
 
 export default function OrderDetailsPage() {
@@ -47,7 +47,7 @@ export default function OrderDetailsPage() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                     <select
                         value={order.status}
-                        onChange={(e) => updateOrderStatus(order.id, e.target.value as any)}
+                        onChange={(e) => updateOrderStatus(order.id, e.target.value as Order['status'])}
                         style={{
                             padding: '0.6rem',
                             borderRadius: '6px',
@@ -156,7 +156,7 @@ export default function OrderDetailsPage() {
                             <span style={{ textTransform: 'uppercase', fontWeight: 'bold', color: '#555' }}>
                                 {order.paymentMethod}
                             </span>
-                            <span className={`${styles.status} ${styles.completed}`} style={{ fontSize: '0.8rem' }}>{t('admin.order_view.paid')}</span>
+                            <span className={`${styles.status} ${styles.completed} `} style={{ fontSize: '0.8rem' }}>{t('admin.order_view.paid')}</span>
                         </div>
                     </div>
 

@@ -5,7 +5,7 @@ import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
 import styles from './Home.module.css';
 import { motion } from 'framer-motion';
-import { FaLeaf, FaHeart, FaShippingFast, FaUser, FaFlask, FaCheckCircle, FaCertificate } from 'react-icons/fa';
+import { FaLeaf, FaUser, FaFlask, FaCheckCircle, FaCertificate } from 'react-icons/fa';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 

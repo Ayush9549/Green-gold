@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { FaLeaf } from 'react-icons/fa';
 
@@ -120,7 +121,7 @@ export default function AdminLogin() {
                 </form>
 
                 <div style={{ marginTop: '2rem', fontSize: '0.85rem', color: '#888' }}>
-                    <a href="/" style={{ textDecoration: 'none', color: '#6b7280' }}>← Back to Website</a>
+                    <Link href="/" style={{ textDecoration: 'none', color: '#6b7280' }}>← Back to Website</Link>
                 </div>
             </div>
         </div>
