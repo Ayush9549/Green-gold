@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
@@ -13,7 +13,7 @@ import { useProducts } from '@/context/ProductContext';
 const CATEGORIES = ["All", "Best Sellers", "Premium", "Classic", "Infused", "Beauty"];
 const SIZES = ["All", "100ml", "250ml", "500ml", "1L", "5L"];
 
-export default function Shop() {
+function ShopContent() {
     const { products } = useProducts(); // Use context
     const searchParams = useSearchParams();
     const searchQuery = searchParams.get('search') || '';
@@ -51,9 +51,7 @@ export default function Shop() {
     });
 
     return (
-        <main>
-            <Navbar />
-
+        <>
             <div className={styles.pageHeader}>
                 <div className="container">
                     <h1 className={styles.pageTitle}>Our Collection</h1>
@@ -152,7 +150,17 @@ export default function Shop() {
                     </div>
                 </section>
             </div>
+        </>
+    );
+}
 
+export default function Shop() {
+    return (
+        <main>
+            <Navbar />
+            <Suspense fallback={<div className="container" style={{ padding: '2rem' }}>Loading Shop...</div>}>
+                <ShopContent />
+            </Suspense>
             <Footer />
         </main>
     );

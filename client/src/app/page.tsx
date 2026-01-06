@@ -57,10 +57,12 @@ export default function Home() {
           width: '100%',
           height: '100%',
         }}>
-          <img
+          <Image
             src="/hero-image.png"
             alt="Jaitun Oil Background"
-            style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.5)' }}
+            fill
+            style={{ objectFit: 'cover', filter: 'brightness(0.5)' }}
+            priority
           />
         </div>
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
@@ -69,6 +71,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
+            style={{ paddingLeft: '10rem' }}
           >
             <h1 className={styles.heroTitle}>Pure Gold from Nature</h1>
             <p className={styles.heroSubtitle}>
@@ -126,9 +129,11 @@ export default function Home() {
         <div className="container">
           <div className={styles.aboutGrid}>
             <div className={styles.aboutImage}>
-              <img
+              <Image
                 src="/green-gold-about-us.png"
                 alt="About Green Gold"
+                width={600}
+                height={400}
                 style={{ width: '100%', height: 'auto', display: 'block' }}
               />
             </div>
@@ -153,8 +158,8 @@ export default function Home() {
             {[1, 2, 3].map((_, i) => (
               <div key={i} className={styles.testimonialCard}>
                 <p className={styles.testimonialQuote}>
-                  "Absolutely the best olive oil I've ever tasted. The flavor is rich and authentic.
-                  I use it for everything from cooking to salads!"
+                  &quot;Absolutely the best olive oil I&apos;ve ever tasted. The flavor is rich and authentic.
+                  I use it for everything from cooking to salads!&quot;
                 </p>
                 <div className={styles.testimonialAuthor}>
                   <div className={styles.authorAvatar}><FaUser /></div>

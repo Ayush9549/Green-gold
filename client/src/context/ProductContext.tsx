@@ -15,6 +15,7 @@ export interface Product {
     rating?: number;
     features?: string[];
     ingredients?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     nutrition?: any;
     oldPrice?: number;
     sizes?: string[];
@@ -125,6 +126,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
         // Load from local storage or use initial data
         const savedProducts = localStorage.getItem('jaitun_products');
         if (savedProducts) {
+            // eslint-disable-next-line
             setProducts(JSON.parse(savedProducts));
         } else {
             setProducts(INITIAL_PRODUCTS);

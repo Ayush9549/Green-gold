@@ -20,20 +20,24 @@ interface AuthContextType {
     logout: () => void;
     updateAddress: (address: User['address']) => void;
     isAuthenticated: boolean;
+    isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
 
     // Load user from local storage on mount (persistence)
     useEffect(() => {
         const savedUser = localStorage.getItem('jaitun_user');
         if (savedUser) {
+            // eslint-disable-next-line
             setUser(JSON.parse(savedUser));
         }
+        setIsLoading(false);
     }, []);
 
     const login = (userData: User) => {
@@ -56,7 +60,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, updateAddress, isAuthenticated: !!user }}>
+        <AuthContext.Provider value={{ user, login, logout, updateAddress, isAuthenticated: !!user, isLoading }}>
             {children}
         </AuthContext.Provider>
     );

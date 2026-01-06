@@ -18,18 +18,30 @@ export default function Login() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+
+        // Admin Validation Hardcoded
+        if (formData.email === 'greengold123@gmail.com') {
+            if (formData.password !== 'Greengold@123') {
+                alert("Invalid password for admin access");
+                return;
+            }
+        }
+
         // Simulate login - In real app, validate with backend
         const mockUser = {
-            name: "Test User",
+            name: formData.email === 'greengold123@gmail.com' ? "Admin User" : "Test User",
             email: formData.email,
             // address: undefined // Intentionally undefined to test address flow
         };
 
         login(mockUser);
-        alert("Logged in successfully!");
 
-        // Return to home or previous page
-        router.push('/');
+        if (formData.email === 'greengold123@gmail.com') {
+            router.push('/admin');
+        } else {
+            alert("Logged in successfully!");
+            router.push('/');
+        }
     };
 
     return (
@@ -68,7 +80,7 @@ export default function Login() {
                         <button type="submit" className={styles.submitBtn}>Sign In</button>
                     </form>
                     <div className={styles.links}>
-                        <p>Don't have an account? <Link href="/register" className={styles.link}>Create one</Link></p>
+                        <p>Don&apos;t have an account? <Link href="/register" className={styles.link}>Create one</Link></p>
                     </div>
                 </div>
             </div>

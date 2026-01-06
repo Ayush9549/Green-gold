@@ -40,7 +40,7 @@ export default function Contact() {
                             <h1 className={styles.heroTitle}>Get in Touch</h1>
                             <p className={styles.heroSubtitle}>
                                 Have questions about our products or partnership opportunities?
-                                We'd love to hear from you.
+                                We&apos;d love to hear from you.
                             </p>
                         </motion.div>
                     </div>
