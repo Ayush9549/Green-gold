@@ -941,7 +941,6 @@ const translations: Translations = {
         'invest.submit': 'Invia Richiesta',
         'invest.success': 'Richiesta inviata! Ti contatteremo entro 24 ore.',
         'invest.prospectus_loading': 'Preparazione del prospetto...',
-        'about.text': 'Il nostro viaggio è iniziato con una missione semplice: portare il gusto autentico e i benefici dell\'olio d\'oliva pugliese sulla tua tavola. Ogni bottiglia è una promessa di qualità da Masseria San Biagio.',
         'admin.dashboard.title': 'Panoramica Dashboard',
         'admin.sales': 'Vendite Totali',
         'admin.orders': 'Ordini Totali',
