@@ -98,7 +98,7 @@ const InvestPage = () => {
                     <div className={styles.trustGrid}>
                         <div className={styles.trustItem}><FaCertificate className={styles.trustIcon} /> {t('cert.fssai')}</div>
                         <div className={styles.trustItem}><FaLock className={styles.trustIcon} /> {t('cert.iso')}</div>
-                        <div className={styles.trustItem}><FaGlobe className={styles.trustIcon} /> EU Organic Standards</div>
+                        <div className={styles.trustItem}><FaGlobe className={styles.trustIcon} /> {t('invest.standards')}</div>
                         <div className={styles.trustItem}><FaChartLine className={styles.trustIcon} /> {t('invest.buyback.title')}</div>
                     </div>
                 </div>
@@ -243,10 +243,10 @@ const InvestPage = () => {
                                         value={inquiryData.hectares}
                                         onChange={(e) => setInquiryData({ ...inquiryData, hectares: e.target.value })}
                                     >
-                                        <option value="1">1 Hectare</option>
-                                        <option value="2">2 Hectares</option>
-                                        <option value="5">5 Hectares</option>
-                                        <option value="10">Full 10 Hectare Segment</option>
+                                        <option value="1">{t('invest.1_hectare')}</option>
+                                        <option value="2">{t('invest.2_hectares')}</option>
+                                        <option value="5">{t('invest.5_hectares')}</option>
+                                        <option value="10">{t('invest.10_hectares')}</option>
                                     </select>
                                 </div>
                                 <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>{t('invest.submit')}</button>

@@ -166,8 +166,8 @@
 .ctaBox::before {
     content: '10 Hectares Only';
     position: absolute;
-    top: 20px;
-    right: -30px;
+    top: 36px;
+    right: -46px;
     background: #ffcc00;
     color: black;
     padding: 10px 40px;
@@ -298,7 +298,13 @@
     }
 
     .ctaButtons {
+        display: flex;
         flex-direction: column; 
+        gap: 1rem;
+    }
+
+    .ctaButtons button {
+        margin-right: 0 !important;
     }
 
     .steps {
