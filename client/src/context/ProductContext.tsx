@@ -35,7 +35,7 @@ const INITIAL_PRODUCTS: Product[] = [
         description: "Our hallmark Organic Extra Virgin Olive Oil is cold-pressed within hours of harvest.",
         features: ["Cold Pressed Extraction", "100% Certified Organic"],
         ingredients: "100% Organic Extra Virgin Olive Oil.",
-        sizes: ["250ml", "500ml", "1L"]
+        sizes: ["product.size.1L", "product.size.3L", "product.size.5L", "product.size.custom"]
     },
     {
         id: "2",
@@ -49,7 +49,7 @@ const INITIAL_PRODUCTS: Product[] = [
         description: "A versatile kitchen staple suitable for everyday cooking.",
         features: ["Versatile Cooking Oil", "Rich Smooth Flavor"],
         ingredients: "100% Cold Pressed Olive Oil.",
-        sizes: ["500ml", "1L", "5L"]
+        sizes: ["product.size.1L", "product.size.3L", "product.size.5L", "product.size.custom"]
     },
     {
         id: "3",
@@ -63,7 +63,7 @@ const INITIAL_PRODUCTS: Product[] = [
         description: "Elevate your culinary creations with our Garlic Infused Olive Oil.",
         features: ["Real Garlic Infusion", "Gourmet Quality"],
         ingredients: "Extra Virgin Olive Oil, Organic Garlic.",
-        sizes: ["250ml", "500ml"]
+        sizes: ["product.size.1L", "product.size.3L", "product.size.5L", "product.size.custom"]
     },
     {
         id: "4",
@@ -77,7 +77,7 @@ const INITIAL_PRODUCTS: Product[] = [
         description: "Specially filtered for cosmetic use, rich in Vitamin E.",
         features: ["Cosmetic Grade", "Deep Moisturization"],
         ingredients: "100% Pure Filtered Olive Oil.",
-        sizes: ["100ml", "250ml"]
+        sizes: ["product.size.1L", "product.size.3L", "product.size.5L", "product.size.custom"]
     },
     {
         id: "5",
@@ -91,7 +91,7 @@ const INITIAL_PRODUCTS: Product[] = [
         description: "We infuse our finest Extra Virgin Olive Oil with white truffles.",
         features: ["Real White Truffle", "Luxury Garnish"],
         ingredients: "Extra Virgin Olive Oil, White Truffle Aroma.",
-        sizes: ["100ml", "250ml"]
+        sizes: ["product.size.1L", "product.size.3L", "product.size.5L", "product.size.custom"]
     },
     {
         id: "6",
@@ -105,7 +105,7 @@ const INITIAL_PRODUCTS: Product[] = [
         description: "Revitalize dry and damaged hair with our Olive Hair Care Elixir.",
         features: ["Promotes Hair Growth", "Scalp Stimulation"],
         ingredients: "Olive Oil, Rosemary Oil, Peppermint Oil.",
-        sizes: ["100ml", "200ml"]
+        sizes: ["product.size.1L", "product.size.3L", "product.size.5L", "product.size.custom"]
     }
 ];
 
@@ -124,7 +124,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         // Load from local storage or use initial data
-        const savedProducts = localStorage.getItem('jaitun_products_v2');
+        const savedProducts = localStorage.getItem('jaitun_products_v3');
         if (savedProducts) {
             // eslint-disable-next-line react-hooks/set-state-in-effect
             setProducts(JSON.parse(savedProducts));
@@ -136,7 +136,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         // Persist to local storage whenever products change
         if (products.length > 0) {
-            localStorage.setItem('jaitun_products_v2', JSON.stringify(products));
+            localStorage.setItem('jaitun_products_v3', JSON.stringify(products));
         }
     }, [products]);
 
