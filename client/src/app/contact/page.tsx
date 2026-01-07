@@ -75,14 +75,21 @@ export default function Contact() {
                                 </div>
                             </div>
 
-                            <div className={styles.infoCard}>
+                            <a
+                                href="https://maps.app.goo.gl/cLcL585NADYirX8n7"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={styles.infoCard}
+                                style={{ textDecoration: 'none', color: 'inherit', display: 'flex' }}
+                            >
                                 <div className={styles.iconWrapper}><FaMapMarkerAlt /></div>
                                 <div className={styles.infoContent}>
                                     <h3>{t('contact.visit.title')}</h3>
                                     <p>Masseria San Biagio, Strada Prov.le 275, km 3</p>
                                     <p>Calimera, Lecce, Puglia, Italy</p>
+                                    <span style={{ fontSize: '0.8rem', color: 'var(--color-primary)', fontWeight: 600 }}>{t('contact.view_map') || 'View on Google Maps →'}</span>
                                 </div>
-                            </div>
+                            </a>
 
                             <div style={{ marginTop: '1rem' }}>
                                 <h3 style={{ fontSize: '1.2rem', fontFamily: 'Playfair Display, serif', marginBottom: '1rem' }}>{t('contact.follow')}</h3>
